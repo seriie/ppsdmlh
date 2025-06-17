@@ -3,6 +3,8 @@ import Image from "next/image";
 import envImg from '../../assets/environtment-image.png';
 import { useState } from "react";
 import { IoIosArrowDropleftCircle } from "react-icons/io";
+import { RxCrossCircled } from "react-icons/rx";
+
 
 
 export default function Questionnaire() {
@@ -12,7 +14,7 @@ const [selectedAnswer, setSelectedAnswer] = useState(" ")
 
   const answers = [
     { text: "Sangat Perduli" },
-    { text: "Perduli" },
+    { text: "peduli" },
     { text: "tidak perduli" },
     { text: "sangat tidak perduli" }
   ];
@@ -25,10 +27,11 @@ const [selectedAnswer, setSelectedAnswer] = useState(" ")
 
           <div className="flex flex-col gap-3 md:gap-5 w-80 px-5">
           <div className="flex absolute pt-5 items-center gap-2 md:relative md:bottom-30 md:right-15">
-             <IoIosArrowDropleftCircle className="text-[#53624a]" />
-             <span className="text-[#53624a] font-md">Beranda</span>
+             <IoIosArrowDropleftCircle className="text-[#53624a] hidden md:block" />
+             <span className="text-[#53624a] font-md hidden md:block">Beranda</span>
+            <RxCrossCircled className="text-[#53624a] text-3xl md:hidden relative right-3" />
           </div>
-          <Image className="  w-75 mb-1 md:hidden" src={envImg} alt="gambar lingkungan" />
+          <Image className="relative left-6 w-75 top-4 h-50 mb-1 md:hidden" src={envImg} alt="gambar lingkungan" />
             <h1 className="text-xl font-bold text-slate-50">Step 1/10</h1>
              <h1 className="text-2xl font-bold text-[#53624a] break-words overflow-wrap">
               {questions.text}
@@ -38,12 +41,12 @@ const [selectedAnswer, setSelectedAnswer] = useState(" ")
         </div>
 
         <div className="bg-slate-50 flex flex-col items-center justify-center p-6 md:rounded-r-[80px] h-full overflow-auto">
-          <Image className="w-75 mb-3 hidden md:block" src={envImg} alt="gambar lingkungan" />
-          <div className="flex flex-col md:max-h-[180px] w-full justify-center items-center">
+          <Image className="w-80 h-50 mb-2 hidden md:block relative bottom-6" src={envImg} alt="gambar lingkungan" />
+          <div className="flex flex-col md:max-h-[180px] w-full justify-center items-center ">
             {answers.map((answer, id) => (
             <label 
             key={id} 
-            className={`text-md w-80 font-bold text-[#5A827E]  rounded-lg border-2 p-1.5 gap-1.5 mb-2 flex items-center cursor-pointer ${selectedAnswer === answer.text ? "bg-[#B9D4AA]" : "hover:bg-[#B9D4AA]"} `}>
+            className={`text-md w-80 font-bold text-[#5A827E] hover:transition-all duration-300 ease-in-out rounded-lg border-2 p-1.5 gap-1.5 mb-2 flex items-center cursor-pointer ${selectedAnswer === answer.text ? "bg-[#B9D4AA]" : "hover:bg-[#B9D4AA]"} `}>
                 <input
                 type="radio"
                 name="question"
@@ -55,9 +58,9 @@ const [selectedAnswer, setSelectedAnswer] = useState(" ")
             </label>
             ))}
 
-            <div className="relative top-3 space-x-4 pb-5"> 
-              <button className="w-28 h-10 rounded-4xl justify-center items-center hover:bg-[#9bb58d] hover:text-slate-50 border-2 border-[#5A827E] text-[#5A827E]">Sebelumnya</button>
-              <button className="w-28 h-10 rounded-4xl justify-center items-center hover:bg-[#9bb58d] bg-[#5A827E] text-slate-50 ">Selanjutnya</button>
+            <div className="relative top-3 space-x-4 md:pb-5"> 
+              <button className="w-28 h-10 rounded-4xl justify-center items-center hover:bg-[#9bb58d] transition-all duration-300 ease-in-out hover:text-slate-50 border-2 border-[#5A827E] text-[#5A827E]">Sebelumnya</button>
+              <button className="w-28 h-10 rounded-4xl justify-center items-center hover:bg-[#9bb58d] transition-all duration-300 ease-in-out bg-[#5A827E] text-slate-50 ">Selanjutnya</button>
             </div>
           </div>
         </div>

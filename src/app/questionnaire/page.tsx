@@ -4,6 +4,8 @@ import envImg from '../../assets/environtment-image.png';
 import { useState } from "react";
 import { IoIosArrowDropleftCircle } from "react-icons/io";
 import { RxCrossCircled } from "react-icons/rx";
+import Icon from "../../assets/icon.png";
+
 
 
 
@@ -20,7 +22,10 @@ const [selectedAnswer, setSelectedAnswer] = useState(" ")
   ];
 
   return (
-    <div className="bg-[#B9D4AA] flex justify-center items-center min-h-screen"> 
+    <div className="bg-[#B9D4AA] flex justify-center items-center min-h-screen relative"> 
+      <div className="absolute top-5 left-5 md:top-10 md:left-10">
+        <Image src={Icon} alt="logo" width={50} height={50} className="md:w-25 h-auto relative bottom-1.5 md:bottom-0" /> 
+      </div>
       <div className="w-[900px] h-auto mx-5 md:w-[1000px] md:h-[500px] grid grid-cols-1 md:grid-cols-2 bg-slate-50 rounded-[50px] md:rounded-[100px] overflow-auto relative border-6 border-slate-50 my-10">
   
         <div className="bg-[#B9D4AA] flex items-center justify-center pb-6 md:p-10 rounded-b-[50px] md:rounded-b-none md:rounded-l-[100px] overflow-auto">
@@ -59,8 +64,8 @@ const [selectedAnswer, setSelectedAnswer] = useState(" ")
             ))}
 
             <div className="relative top-3 space-x-4 md:pb-5"> 
-              <button className="w-28 h-10 rounded-4xl justify-center items-center hover:bg-[#9bb58d] transition-all duration-300 ease-in-out hover:text-slate-50 border-2 border-[#5A827E] text-[#5A827E]">Sebelumnya</button>
-              <button className="w-28 h-10 rounded-4xl justify-center items-center hover:bg-[#9bb58d] transition-all duration-300 ease-in-out bg-[#5A827E] text-slate-50 ">Selanjutnya</button>
+              <button className="w-28 h-10 rounded-4xl justify-center items-center hover:bg-[#9bb58d] hover:scale-100 transition-all duration-300 ease-in-out hover:text-slate-50 border-2 border-[#5A827E] text-[#5A827E]">Sebelumnya</button>
+              <button className="w-28 h-10 rounded-4xl justify-center items-center hover:bg-[#9bb58d] hover:scale-100 transition-all duration-300 ease-in-out bg-[#5A827E] text-slate-50 ">Selanjutnya</button>
             </div>
           </div>
         </div>

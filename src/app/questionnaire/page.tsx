@@ -22,11 +22,12 @@ const [selectedAnswer, setSelectedAnswer] = useState(" ")
   ];
 
   return (
-    <div className="bg-[#B9D4AA] flex justify-center items-center min-h-screen relative"> 
+    <div className="bg-[#B9D4AA] flex justify-center items-center min-h-svh relative"> 
       <div className="absolute top-5 left-5 md:top-10 md:left-10">
         <Image src={Icon} alt="logo" width={50} height={50} className="md:w-25 h-auto relative bottom-1.5 md:bottom-0" /> 
       </div>
-      <div className="w-[900px] h-auto mx-5 md:w-[1000px] md:h-[500px] grid grid-cols-1 md:grid-cols-2 bg-slate-50 rounded-[50px] md:rounded-[100px] overflow-auto relative border-6 border-slate-50 my-10">
+<div className="w-[900px] h-auto mx-5 md:w-[1000px] md:h-[500px] grid grid-cols-1 md:grid-cols-2 bg-slate-50 rounded-[50px] md:rounded-[100px] overflow-auto relative border-6 border-slate-50 shadow-xl my-10">
+
   
         <div className="bg-[#B9D4AA] flex items-center justify-center pb-6 md:p-10 rounded-b-[50px] md:rounded-b-none md:rounded-l-[100px] overflow-auto">
 

@@ -2,60 +2,59 @@
 
 import { useEffect, useState } from "react";
 import Image from "next/image";
-import Logo from "../assets/icon.png"
+import { useRouter } from "next/navigation";
 
 interface SplashScreenProps {
-  onFinish: () => void;
+  logoSrc: string;
 }
 
-export default function SplashScreen({ onFinish }: SplashScreenProps) {
-  const [step, setStep] = useState<"logo-fadein" | "logo-rise" | "text-show" | "done">("logo-fadein");
+export default function SplashScreen({ logoSrc }: SplashScreenProps) {
+  const [showText, setShowText] = useState(false);
+  const [logoUp, setLogoUp] = useState(false);
+  const [fadeInLogo, setFadeInLogo] = useState(false);
+  const router = useRouter();
 
   useEffect(() => {
-    const timers = [
-      setTimeout(() => setStep("logo-rise"), 1500),      // setelah fade in logo selesai
-      setTimeout(() => setStep("text-show"), 2500),      // lalu teks muncul
-    ];
-
-    return () => timers.forEach(clearTimeout);
+    const fadeTimer = setTimeout(() => setFadeInLogo(true), 100);
+    const pauseTimer = setTimeout(() => setLogoUp(true), 2000);
+    const textTimer = setTimeout(() => setShowText(true), 3000);
+    return () => {
+      clearTimeout(fadeTimer);
+      clearTimeout(pauseTimer);
+      clearTimeout(textTimer);
+    };
   }, []);
 
-  if (step === "done") return null;
+  const handleStart = () => {
+    router.push("/register");
+  };
 
   return (
-    <div className="fixed inset-0 z-50 bg-white flex items-center justify-center px-4 transition-opacity duration-1000">
-      <div className="relative flex flex-col items-center w-full max-w-md">
-        {/* LOGO */}
-        <Image
-          src={Logo}
-          alt="Logo"
-          className={`w-50 h-24 transition-all duration-1000 ${
-            step === "logo-fadein" ? "opacity-0" :
-            step === "logo-rise" ? "opacity-100 translate-y-[-60px]" :
-            "opacity-100 translate-y-[-60px]"
-          }`}
-        />
-
-        {/* TEKS + BUTTON */}
-        {step === "text-show" && (
-          <div className="text-center mt-6 animate-fade-up">
-            <h1 className="text-xl font-semibold text-gray-800">
-              Selamat datang di survey lingkungan hidup
-            </h1>
-            <p className="text-sm text-gray-600 mt-2">
-              Suaramu penting untuk masa depan bumi
-            </p>
-            <button
-              onClick={() => {
-  setStep("done");
-  onFinish();
-}}
-              className="mt-6 px-6 py-2 bg-green-600 text-white rounded-md hover:bg-green-700 transition"
-            >
-              Mulai
-            </button>
-          </div>
-        )}
+    <div className={`fixed inset-0 w-full flex items-center justify-center bg-[#B9D4AA] px-4`}>
+      <div className="relative w-full max-w-xl text-center">
+        <div
+          className={`transition-all duration-500 ease-in-out mx-auto
+            ${fadeInLogo ? "opacity-100" : "opacity-0"}
+            ${logoUp ? "-translate-y-10" : "translate-y-25"}
+            w-fit
+          `}
+        >
+          <Image src={logoSrc} alt="Logo" width={200} height={200} priority />
+        </div>
+        <div className={`text-center transition-all font-sans duration-500 ${showText ? "opacity-100" : "opacity-0"} mt-8`}>
+          <h1 className="text-2xl md:text-3xl font-semibold text-slate-50 delay-[100ms] md:text-nowrap">
+            Selamat datang di survey Lingkungan Hidup 🌱
+          </h1>
+          <span className="text-sm md:text-xl font-medium text-[#5A827E] block mt-2 animate-fade-up delay-[300ms] transition-all">
+            Suara kamu penting untuk masa depan bumi
+          </span>
+          <button
+            onClick={handleStart}
+            className="mt-6 px-8 py-2 bg-[#5A827E] text-white rounded-2xl font-semibold hover:scale-110 hover:duration-300 hover:font-bold transition animate-bounce"
+          >
+            Mulai
+          </button>
+        </div>
       </div>
     </div>
   );

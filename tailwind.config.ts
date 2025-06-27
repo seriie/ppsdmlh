@@ -1,10 +1,12 @@
-// tailwind.config.ts
 import type { Config } from "tailwindcss";
 
 const config: Config = {
   content: ["./app/**/*.{js,ts,jsx,tsx}", "./components/**/*.{js,ts,jsx,tsx}"],
   theme: {
     extend: {
+       fontFamily: {
+        sans: ["var(--font-nunito)", "sans-serif"],
+      },
       keyframes: {
         'logo-rise': {
           '0%': { transform: 'translateY(30px)', opacity: '0' },
@@ -17,7 +19,7 @@ const config: Config = {
       },
       animation: {
         'logo-rise': 'logo-rise 1s ease-out forwards',
-        'fade-up': 'fade-up 1s ease-out forwards',
+        'fade-up': 'fade-up 1s ease-in-out forwards',
       },
     },
   },

@@ -18,20 +18,18 @@ export default function LoginForm() {
   const handleLogin = async () => {
     setIsLoggingIn(true);
     try {
-      const { data } = await axios.post(
-        `${process.env.NEXT_PUBLIC_API_BASE}/auth/login`, {
-          email, password
-        });
-  
-      if (data.token) {
-        await signIn("credentials", {
-          redirect: false,
-          token: data.token,
-          callbackUrl: '/dashboard',
-        });
-      }
-      setIsLoggingIn(false);
-      router.push('/questionnaire');
+   const res = await signIn("credentials", {
+    redirect: false,
+    email,
+    password,
+    callbackUrl: "/dashboard",
+  });
+  if(res?.ok) {
+    router.push('/questionnaire');
+  } else {
+    setError("Email atau password salah");
+  }
+  setIsLoggingIn(false);
     } catch (e) {
       const eMsg = e instanceof Error ? e?.message : "Login gagal";
       console.log(e);

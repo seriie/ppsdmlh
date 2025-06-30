@@ -9,7 +9,10 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@prisma/client": "^6.10.1",
     "axios": "^1.10.0",
+    "bcrypt": "^6.0.0",
+    "bcryptjs": "^3.0.2",
     "jsonwebtoken": "^9.0.2",
     "nanoid": "^5.1.5",
     "next": "15.3.3",
@@ -26,7 +29,7 @@
     "@types/react-dom": "^19",
     "eslint": "^9",
     "eslint-config-next": "15.3.3",
-    "prisma": "^6.9.0",
+    "prisma": "^6.10.1",
     "tailwindcss": "^4",
     "typescript": "^5"
   }

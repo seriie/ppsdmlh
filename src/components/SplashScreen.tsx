@@ -50,7 +50,7 @@ export default function SplashScreen({ logoSrc }: SplashScreenProps) {
           </span>
           <button
             onClick={handleStart}
-            className="mt-6 px-8 py-2 bg-[#5A827E] text-white rounded-2xl font-semibold hover:scale-110 hover:duration-300 hover:font-bold transition animate-bounce"
+            className="mt-6 px-8 py-2 cursor-pointer bg-[#5A827E] text-white rounded-2xl font-semibold hover:scale-110 hover:duration-300 hover:font-bold transition animate-bounce"
           >
             Mulai
           </button>

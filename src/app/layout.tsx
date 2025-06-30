@@ -2,6 +2,7 @@
 import type { Metadata } from "next";
 import { Nunito } from "next/font/google";
 import "./globals.css";
+import SessionWrapper from "@/components/SessionWrapper";
 
 // load font with variable
 const nunito = Nunito({
@@ -23,7 +24,9 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`${nunito.variable} font-sans`}>
-        {children}
+        <SessionWrapper>
+          {children}
+        </SessionWrapper>
       </body>
     </html>
   );

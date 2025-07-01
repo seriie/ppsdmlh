@@ -1,5 +1,7 @@
 "use client";
 
+import AppSideBar from "@/layout/main/Sidebar";
+
 import { useSession, signOut } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import {
@@ -27,12 +29,13 @@ export default function DashboardPage() {
 
   return (
     <div className="min-h-screen bg-gray-100 py-10 px-6">
+        {/* <AppSideBar /> */}
       <div className="max-w-6xl mx-auto">
         <div className="flex justify-between items-center mb-8">
           <div>
             <h1 className="text-3xl font-bold text-gray-800">Dashboard</h1>
             <p className="text-sm text-gray-500">
-              Selamat datang kembali, {session?.user?.name || "User"}!
+              Selamat datang kembali, {session?.user?.fullname || "User"}!
             </p>
           </div>
           <Button variant="outline" onClick={handleLogout}>

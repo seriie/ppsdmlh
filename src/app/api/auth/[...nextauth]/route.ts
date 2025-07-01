@@ -16,16 +16,21 @@ const handler = NextAuth({
           where: { email: credentials?.email },
         });
 
-        
         if (!user) return null;
         console.log("users:", credentials);
+        console.log(user);
 
-        const validPw = await bcrypt.compare(credentials.password, user.password);
+        const validPw = await bcrypt.compare(
+          credentials.password,
+          user.password
+        );
         if (!validPw) return null;
 
         return {
           id: user.id,
+          fullname: user.fullname,
           email: user.email,
+          role: user.role,
         };
       },
     }),
@@ -37,14 +42,19 @@ const handler = NextAuth({
     async jwt({ token, user }) {
       if (user) {
         token.id = user.id;
+        token.fullname = user.fullname;
+        token.role = user.role;
       }
       return token;
     },
     async session({ session, token }) {
       session.user.id = token.id;
+      session.user.fullname = token.fullname;
+      session.user.role = token.role;
       return session;
     },
   },
+
   pages: {
     signIn: "/login",
   },

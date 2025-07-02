@@ -29,7 +29,7 @@ export default function DashboardPage() {
 
   return (
     <div className="min-h-screen bg-gray-100 py-10 px-6">
-        {/* <AppSideBar /> */}
+        <AppSideBar />
       <div className="max-w-6xl mx-auto">
         <div className="flex justify-between items-center mb-8">
           <div>

@@ -1,6 +1,5 @@
 import { signIn } from "next-auth/react";
 import { useRouter } from "next/navigation";
-import axios from "axios";
 
 import { useState } from "react";
 import { IoMdEyeOff } from "react-icons/io";

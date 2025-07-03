@@ -2,6 +2,7 @@ import NextAuth from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
 import bcrypt from "bcryptjs";
 import { prisma } from "@/lib/prisma";
+import { User } from "next-auth";
 
 const handler = NextAuth({
   providers: [
@@ -11,14 +12,15 @@ const handler = NextAuth({
         email: { type: "text" },
         password: { type: "password" },
       },
-      async authorize(credentials, req) {
+      authorize: async (
+        credentials: Record<"email" | "password", string> | undefined,
+        req
+      ): Promise<User | null> => {
         const user = await prisma.users.findUnique({
           where: { email: credentials?.email },
         });
 
         if (!user) return null;
-        console.log("users:", credentials);
-        console.log(user);
 
         const validPw = await bcrypt.compare(
           credentials.password,
@@ -28,8 +30,8 @@ const handler = NextAuth({
 
         return {
           id: user.id,
-          fullname: user.fullname,
           email: user.email,
+          name: user.fullname,
           role: user.role,
         };
       },

@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { IoMdEyeOff, IoMdEye } from "react-icons/io";
 import axios from "axios";
 import { useRouter } from "next/navigation";
+import { getAxiosErrorMessage } from "@/lib/utils/getAxiosErrMsg";
 
 import Alerts from "./root/Alerts";
 
@@ -33,8 +34,7 @@ export default function RegisterForm() {
       }
     } catch (e: unknown) {
       setIsRegistering(false);
-      const errMsg = e.response?.data?.message || "Gagal mendaftar!";
-      setError(errMsg);
+      setError(getAxiosErrorMessage(e));
     }
   };
 

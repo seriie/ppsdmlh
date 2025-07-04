@@ -5,17 +5,21 @@ import { useState } from "react";
 import { IoMdEyeOff } from "react-icons/io";
 import { IoMdEye } from "react-icons/io";
 
+import Alerts from "./root/Alerts";
+
 export default function LoginForm() {
-  const [showPw, setShowPw] = useState(false);
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [isLoggingIn, setIsLoggingIn] = useState(false);
-  const [error, setError] = useState("");
+  const [showPw, setShowPw] = useState<boolean>(false);
+  const [email, setEmail] = useState<string>("");
+  const [password, setPassword] = useState<string>("");
+  const [isLoggingIn, setIsLoggingIn] = useState<boolean>(false);
+  const [error, setError] = useState<string>("");
+  const [alertKey, setAlertKey] = useState<number>(0);
 
   const router = useRouter();
   
   const handleLogin = async () => {
     setIsLoggingIn(true);
+    setAlertKey(prev => prev + 1);
     try {
    const res = await signIn("credentials", {
     redirect: false,
@@ -39,6 +43,7 @@ export default function LoginForm() {
 
   return (
     <>
+      <Alerts key={alertKey} type="warn" title={error} description="Mohon periksa ulang email dan password" time={3000} />
       <form
         onSubmit={(e) => {
           e.preventDefault();
@@ -74,7 +79,7 @@ export default function LoginForm() {
               {showPw ? <IoMdEyeOff /> : <IoMdEye />}
             </div>
           </div>
-          {error && <p className="text-red-500">{error}</p>}
+          {/* {error && <p className="text-red-500">{error}</p>} */}
           <button
             type="submit"
             className="p-3 cursor-pointer bg-[#5A827E] rounded-2xl text-slate-50 mt-2.5 hover:bg-[#84AE92] transition-colors duration-200"

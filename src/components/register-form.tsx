@@ -1,4 +1,4 @@
-import { useState } from "react";
+import React, { useState } from "react";
 import { IoMdEyeOff, IoMdEye } from "react-icons/io";
 import axios from "axios";
 import { useRouter } from "next/navigation";
@@ -15,7 +15,7 @@ export default function RegisterForm() {
   const [error, setError] = useState("");
   const [alertKey, setAlertKey] = useState(0);
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setIsRegistering(true);
     setAlertKey(prev => prev + 1);
@@ -31,7 +31,7 @@ export default function RegisterForm() {
         setIsRegistering(false);
         router.push("/auth/login");
       }
-    } catch (e) {
+    } catch (e: unknown) {
       setIsRegistering(false);
       const errMsg = e.response?.data?.message || "Gagal mendaftar!";
       setError(errMsg);

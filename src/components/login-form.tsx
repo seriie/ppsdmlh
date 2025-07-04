@@ -43,7 +43,13 @@ export default function LoginForm() {
 
   return (
     <>
-      <Alerts key={alertKey} type="warn" title={error} description="Mohon periksa ulang email dan password" time={3000} />
+      <Alerts 
+        key={alertKey} 
+        type="warn" 
+        title={error} 
+        description="Mohon periksa ulang email dan password" 
+        time={3000} 
+      />
       <form
         onSubmit={(e) => {
           e.preventDefault();
@@ -89,7 +95,7 @@ export default function LoginForm() {
           </button>
           <p className="text-center text-slate-900">
             Belum punya akun?{" "}
-            <a className="text-sky-500 hover:underline" href="/register">
+            <a className="text-sky-500 hover:underline" href="/auth/register">
               Daftar
             </a>
           </p>

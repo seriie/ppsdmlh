@@ -1,8 +1,8 @@
 "use client";
 
-import Logo from "../../assets/LogoLoginRegist.png";
+import Logo from "../../../assets/LogoLoginRegist.png";
 import Image from "next/image";
-import icon from "../../assets/icon.png";
+import icon from "../../../assets/icon.png";
 import LoginForm from "@/components/login-form";
 
 export default function LoginPage() {

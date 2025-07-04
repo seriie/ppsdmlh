@@ -1,9 +1,9 @@
 "use client";
 
 import Image from "next/image";
-import Logo from "../../assets/LogoLoginRegist.png";
+import Logo from "../../../assets/LogoLoginRegist.png";
 import RegisterForm from "@/components/register-form";
-import icon from '../../assets/icon.png';
+import icon from '../../../assets/icon.png';
 
 export default function RegisterPage() {
 

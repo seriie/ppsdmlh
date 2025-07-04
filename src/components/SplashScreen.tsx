@@ -26,7 +26,7 @@ export default function SplashScreen({ logoSrc }: SplashScreenProps) {
   }, []);
 
   const handleStart = () => {
-    router.push("/register");
+    router.push("/auth/register");
   };
 
   return (

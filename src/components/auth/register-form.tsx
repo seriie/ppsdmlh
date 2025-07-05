@@ -98,7 +98,7 @@ export default function RegisterForm() {
             className="p-3 cursor-pointer bg-[#5A827E] rounded-2xl text-slate-50 mt-2.5 hover:bg-[#84AE92] transition-colors duration-200"
             disabled={isRegistering}
           >
-            {isRegistering ? "Mendaftar" : "Daftar"}
+            {isRegistering ? "Mendaftar..." : "Daftar"}
           </button>
           <p className="text-center text-slate-900">
             Sudah punya akun?{" "}

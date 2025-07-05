@@ -1,106 +1,110 @@
-import { signIn } from "next-auth/react";
-import { useRouter } from "next/navigation";
+  import { signIn } from "next-auth/react";
+  import { useRouter } from "next/navigation";
 
-import { useState } from "react";
-import { IoMdEyeOff } from "react-icons/io";
-import { IoMdEye } from "react-icons/io";
+  import { useState } from "react";
+  import { IoMdEyeOff } from "react-icons/io";
+  import { IoMdEye } from "react-icons/io";
 
-import Alerts from "./root/Alerts";
+  import Alerts from "./root/Alerts";
 
-export default function LoginForm() {
-  const [showPw, setShowPw] = useState<boolean>(false);
-  const [email, setEmail] = useState<string>("");
-  const [password, setPassword] = useState<string>("");
-  const [isLoggingIn, setIsLoggingIn] = useState<boolean>(false);
-  const [error, setError] = useState<string>("");
-  const [alertKey, setAlertKey] = useState<number>(0);
+  export default function LoginForm() {
+    const [showPw, setShowPw] = useState<boolean>(false);
+    const [email, setEmail] = useState<string>("");
+    const [password, setPassword] = useState<string>("");
+    const [isLoggingIn, setIsLoggingIn] = useState<boolean>(false);
+    const [error, setError] = useState<string>("");
+    const [alertKey, setAlertKey] = useState<number>(0);
 
-  const router = useRouter();
-  
-  const handleLogin = async () => {
-    setIsLoggingIn(true);
-    setAlertKey(prev => prev + 1);
-    try {
-   const res = await signIn("credentials", {
-    redirect: false,
-    email,
-    password,
-    callbackUrl: "/dashboard",
-  });
-  if(res?.ok) {
-    router.push('/questionnaire');
-  } else {
-    setError("Email atau password salah");
-  }
-  setIsLoggingIn(false);
-    } catch (e) {
-      const eMsg = e instanceof Error ? e?.message : "Login gagal";
-      console.log(e);
-      setError(eMsg);
-      setIsLoggingIn(false);
+    const router = useRouter();
+    
+   const handleLogin = async () => {
+  setIsLoggingIn(true);
+  setError(""); // reset dulu error-nya
+
+  try {
+    const res = await signIn("credentials", {
+      redirect: false,
+      email,
+      password,
+      callbackUrl: "/dashboard",
+    });
+
+    if (res?.ok) {
+      router.push("/questionnaire");
+    } else {
+      setError("Email atau password salah");
+      setAlertKey(prev => prev + 1); // cuma trigger alert kalau gagal
     }
-  };
+  } catch (e) {
+    const eMsg = e instanceof Error ? e.message : "Login gagal";
+    console.log(e);
+    setError(eMsg);
+    setAlertKey(prev => prev + 1); // error dari catch juga trigger alert
+  }
 
-  return (
-    <>
-      <Alerts 
-        key={alertKey} 
-        type="warn" 
-        title={error} 
-        description="Mohon periksa ulang email dan password" 
-        time={3000} 
-      />
-      <form
-        onSubmit={(e) => {
-          e.preventDefault();
-          handleLogin();
-        }}
-        className="bg-transparent max-w-md backdrop-blur-3xl w-3/4 relative md:top-15 rounded-lg"
-      >
-        <div className="text-center">
-          <h1 className="text-2xl text-[#5A827E] font-bold">Login</h1>
-          <p className="mt-2 text-[#5A827E]">Silakan masuk untuk lanjut</p>
-        </div>
+  setIsLoggingIn(false);
+};
 
-        <div className="mt-4 flex flex-col w-full gap-2">
-          <input
-            className="focus:outline-[#84AE92] border-2 border-[#5A827E] text-[#84AE92] outline-1 rounded-2xl p-2"
-            type="email"
-            placeholder="email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-          />
-          <div className="relative">
-            <input
-              className="focus:outline-[#84AE92] border-2 border-[#5A827E] text-[#84AE92] outline-1 rounded-2xl p-2 w-full"
-              type={showPw ? "text" : "password"}
-              placeholder="password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-            />
-            <div
-              onClick={() => setShowPw(!showPw)}
-              className="absolute top-3 right-3 cursor-pointer text-[#5A827E]"
-            >
-              {showPw ? <IoMdEyeOff /> : <IoMdEye />}
-            </div>
+    return (
+      <>
+        <Alerts 
+          key={alertKey} 
+          type="warn" 
+          title={error} 
+          description="Mohon periksa ulang email dan password" 
+          time={3000} 
+        />
+        <form
+          onSubmit={(e) => {
+            e.preventDefault();
+            handleLogin();
+          }}
+          className="bg-transparent max-w-md backdrop-blur-3xl w-3/4 relative md:top-15 rounded-lg"
+        >
+          <div className="text-center">
+            <h1 className="text-2xl text-[#5A827E] font-bold">Login</h1>
+            <p className="mt-2 text-[#5A827E]">Silakan masuk untuk lanjut</p>
           </div>
-          {/* {error && <p className="text-red-500">{error}</p>} */}
-          <button
-            type="submit"
-            className="p-3 cursor-pointer bg-[#5A827E] rounded-2xl text-slate-50 mt-2.5 hover:bg-[#84AE92] transition-colors duration-200"
-            disabled={isLoggingIn}
-          >
-            {isLoggingIn ? 'memasuk...' : 'masuk'}
-          </button>
-          <p className="text-center text-slate-900">
-            Belum punya akun?{" "}
-            <a className="text-sky-500 hover:underline" href="/auth/register">
-              Daftar
-            </a>
-          </p>
-        </div>
-      </form>
-    </>
-  );
-}
+
+          <div className="mt-4 flex flex-col w-full gap-2">
+            <input
+              className="focus:outline-[#84AE92] border-2 border-[#5A827E] text-[#84AE92] outline-1 rounded-2xl p-2"
+              type="email"
+              placeholder="email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+            />
+            <div className="relative">
+              <input
+                className="focus:outline-[#84AE92] border-2 border-[#5A827E] text-[#84AE92] outline-1 rounded-2xl p-2 w-full"
+                type={showPw ? "text" : "password"}
+                placeholder="password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+              />
+              <div
+                onClick={() => setShowPw(!showPw)}
+                className="absolute top-3 right-3 cursor-pointer text-[#5A827E]"
+              >
+                {showPw ? <IoMdEyeOff /> : <IoMdEye />}
+              </div>
+            </div>
+            {/* {error && <p className="text-red-500">{error}</p>} */}
+            <button
+              type="submit"
+              className="p-3 cursor-pointer bg-[#5A827E] rounded-2xl text-slate-50 mt-2.5 hover:bg-[#84AE92] transition-colors duration-200"
+              disabled={isLoggingIn}
+            >
+              {isLoggingIn ? 'memasuk...' : 'masuk'}
+            </button>
+            <p className="text-center text-slate-900">
+              Belum punya akun?{" "}
+              <a className="text-sky-500 hover:underline" href="/auth/register">
+                Daftar
+              </a>
+            </p>
+          </div>
+        </form>
+      </>
+    );
+  }

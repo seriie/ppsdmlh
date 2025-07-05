@@ -3,7 +3,7 @@
 import Logo from "../../../assets/LogoLoginRegist.png";
 import Image from "next/image";
 import icon from "../../../assets/icon.png";
-import LoginForm from "@/components/login-form";
+import LoginForm from "@/components/auth/login-form";
 
 export default function LoginPage() {
   

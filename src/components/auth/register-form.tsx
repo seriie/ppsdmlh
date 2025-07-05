@@ -4,7 +4,7 @@ import axios from "axios";
 import { useRouter } from "next/navigation";
 import { getAxiosErrorMessage } from "@/lib/utils/getAxiosErrMsg";
 
-import Alerts from "./root/Alerts";
+import Alerts from "@/components/root/Alerts";
 
 export default function RegisterForm() {
   const router = useRouter();
@@ -14,12 +14,11 @@ export default function RegisterForm() {
   const [password, setPassword] = useState("");
   const [isRegistering, setIsRegistering] = useState(false);
   const [error, setError] = useState("");
-  const [alertKey, setAlertKey] = useState(0);
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setIsRegistering(true);
-    setAlertKey(prev => prev + 1);
+    setError("");
 
     try {
       const res = await axios.post("/api/register", {
@@ -31,6 +30,9 @@ export default function RegisterForm() {
       if (res.status === 201) {
         setIsRegistering(false);
         router.push("/auth/login");
+      } else {
+        setError("Registrasi gagal. Coba lagi ya!");
+        setIsRegistering(false);
       }
     } catch (e: unknown) {
       setIsRegistering(false);
@@ -40,7 +42,15 @@ export default function RegisterForm() {
 
   return (
     <>
-      <Alerts key={alertKey} type="warn" title="Gagal registrasi" description={error} time={2000} />
+      {error && (
+        <Alerts
+          type="warn"
+          title="Gagal registrasi"
+          description={error}
+          time={2000}
+        />
+      )}
+
       <form
         onSubmit={handleSubmit}
         className="bg-transparent max-w-md backdrop-blur-3xl w-3/4 relative md:top-15 rounded-lg"
@@ -88,7 +98,7 @@ export default function RegisterForm() {
             className="p-3 cursor-pointer bg-[#5A827E] rounded-2xl text-slate-50 mt-2.5 hover:bg-[#84AE92] transition-colors duration-200"
             disabled={isRegistering}
           >
-            {isRegistering ? 'Mendaftar' : 'Daftar'}
+            {isRegistering ? "Mendaftar" : "Daftar"}
           </button>
           <p className="text-center text-slate-900">
             Sudah punya akun?{" "}

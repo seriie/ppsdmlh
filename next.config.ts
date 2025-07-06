@@ -5,9 +5,3 @@ const nextConfig: NextConfig = {
 };
 
 export default nextConfig;
-
-export const config = {
-  matcher: [
-    "/((?!_next/static|_next/image|favicon.ico).*)",
-  ],
-};

@@ -27,7 +27,7 @@ export default function LoginForm() {
       });
 
       if (res?.ok) {
-        router.push("/questionnaire");
+        router.push("/dashboard");
       } else {
         setError("Email atau password salah");
       }

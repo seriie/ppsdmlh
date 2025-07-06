@@ -1,27 +1,21 @@
+import { getToken } from "next-auth/jwt";
 import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
 
-export function middleware(req: NextRequest) {
-  const token =
-    req.cookies.get("__Secure-next-auth.session-token")?.value ||
-    req.cookies.get("next-auth.session-token")?.value;
+const PUBLIC_ROUTES = ["/", "/auth/login", "/auth/register"];
 
+export async function middleware(req: NextRequest) {
+  const token = await getToken({ req });
+  const isLoggedIn = !!token;
   const { pathname } = req.nextUrl;
 
-  const isAuthPage = pathname === "/login" || pathname === "/register";
-  const isProtectedPage = ["/dashboard", "/questionnaire"].includes(pathname);
-
-  if (!token && isProtectedPage) {
-    return NextResponse.redirect(new URL("/login", req.url));
+  if (!isLoggedIn && !PUBLIC_ROUTES.includes(pathname)) {
+    return NextResponse.redirect(new URL("/auth/login", req.url));
   }
 
-  if (token && isAuthPage) {
+  if (isLoggedIn && ["/auth/login", "/auth/register"].includes(pathname)) {
     return NextResponse.redirect(new URL("/dashboard", req.url));
   }
 
   return NextResponse.next();
 }
-
-export const config = {
-  matcher: ["/login", "/register", "/dashboard", "/questionnaire"],
-};

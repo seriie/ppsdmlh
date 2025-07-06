@@ -47,7 +47,7 @@ export default function RegisterForm() {
           type="warn"
           title="Gagal registrasi"
           description={error}
-          time={2000}
+          time={3000}
         />
       )}
 

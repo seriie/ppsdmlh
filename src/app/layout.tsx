@@ -12,8 +12,8 @@ const nunito = Nunito({
 });
 
 export const metadata: Metadata = {
-  title: "Your App",
-  description: "Deskripsi app lo",
+  title: "Eco Voice",
+  description: "Platform untuk mengisi survei kinerja para pelajar",
 };
 
 export default function RootLayout({

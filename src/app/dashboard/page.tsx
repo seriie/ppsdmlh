@@ -34,8 +34,7 @@ export default function DashboardPage() {
         <div className="flex justify-between items-center mb-8">
           <div>
             <h1 className="text-3xl font-bold text-gray-800">Dashboard</h1>
-            <p className="text-sm text-gray-500">
-              Selamat datang kembali, {session?.user?.fullname || "User"}!
+            <p> Selamat datang kembali, {session?.user?.fullname || "User"}!
             </p>
           </div>
           <Button variant="outline" onClick={handleLogout}>

@@ -36,7 +36,7 @@ export default function SplashScreen({ logoSrc }: {logoSrc: StaticImageData}) {
             w-fit
           `}
         >
-          <Image src={logoSrc} alt="Logo" width={200} height={200} priority />
+          <Image src={typeof logoSrc === "string" ? logoSrc : logoSrc.src} alt="Logo" width={200} height={200} priority />
         </div>
         <div className={`text-center transition-all font-sans duration-500 ${showText ? "opacity-100" : "opacity-0"} mt-8`}>
           <h1 className="text-2xl md:text-3xl font-semibold text-slate-50 delay-[100ms] md:text-nowrap">

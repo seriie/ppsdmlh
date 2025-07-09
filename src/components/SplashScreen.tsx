@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 
-export default function SplashScreen({ logoSrc }: string) {
+export default function SplashScreen({ logoSrc }: {logoSrc: string}) {
   const [showText, setShowText] = useState(false);
   const [logoUp, setLogoUp] = useState(false);
   const [fadeInLogo, setFadeInLogo] = useState(false);

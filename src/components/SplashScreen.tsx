@@ -4,11 +4,7 @@ import { useEffect, useState } from "react";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 
-interface SplashScreenProps {
-  logoSrc: string;
-}
-
-export default function SplashScreen({ logoSrc }: SplashScreenProps) {
+export default function SplashScreen({ logoSrc }: string) {
   const [showText, setShowText] = useState(false);
   const [logoUp, setLogoUp] = useState(false);
   const [fadeInLogo, setFadeInLogo] = useState(false);

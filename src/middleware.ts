@@ -3,12 +3,12 @@ import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
 
 const PUBLIC_ROUTES = ["/", "/auth/login", "/auth/register"];
-const ADMIN_ROUTES = ["/admin"];
 
 export async function middleware(req: NextRequest) {
   const token = await getToken({ req });
   const isLoggedIn = !!token;
   const { pathname } = req.nextUrl;
+  const ADMIN_ROUTES = pathname.startsWith('/admin');
 
   if (!isLoggedIn && !PUBLIC_ROUTES.includes(pathname)) {
     return NextResponse.redirect(new URL("/auth/login", req.url));
@@ -18,7 +18,7 @@ export async function middleware(req: NextRequest) {
     return NextResponse.redirect(new URL("/dashboard", req.url));
   }
 
-  if (isLoggedIn && ADMIN_ROUTES.includes(pathname)) {
+  if (isLoggedIn && ADMIN_ROUTES) {
     const userRole = token?.role;
     if (userRole === "user") {
       return NextResponse.redirect(new URL("/dashboard", req.url));

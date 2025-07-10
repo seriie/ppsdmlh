@@ -12,7 +12,10 @@ const nunito = Nunito({
 });
 
 export const metadata: Metadata = {
-  title: "Eco Voice",
+  title: {
+    default: "Eco Voice",
+    template: "%s | Eco Voice",
+  },
   description: "Platform untuk mengisi survei kinerja para pelajar",
 };
 

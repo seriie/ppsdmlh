@@ -1,12 +1,14 @@
-"use client";
-
+import { Metadata } from "next";
 import Image from "next/image";
 import Logo from "../../../assets/LogoLoginRegist.png";
 import RegisterForm from "@/components/auth/register-form";
 import icon from '../../../assets/icon.png';
 
-export default function RegisterPage() {
+export const metadata: Metadata = {
+  title: "Register"
+}
 
+export default function RegisterPage() {
   return (
     <>
       <div className="grid grid-cols-1 md:grid-cols-[1fr_2fr] min-h-screen">

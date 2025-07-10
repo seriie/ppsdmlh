@@ -1,3 +1,5 @@
+"use client";
+
 import React, { useState } from "react";
 import { IoMdEyeOff, IoMdEye } from "react-icons/io";
 import axios from "axios";

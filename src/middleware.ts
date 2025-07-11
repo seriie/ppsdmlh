@@ -11,7 +11,7 @@ export async function middleware(req: NextRequest) {
   const ADMIN_ROUTES = pathname.startsWith('/admin');
 
   if (!isLoggedIn && !PUBLIC_ROUTES.includes(pathname)) {
-    return NextResponse.redirect(new URL("/auth/login", req.url));
+    return NextResponse.redirect(new URL("/", req.url));
   }
 
   if (isLoggedIn && ["/auth/login", "/auth/register"].includes(pathname)) {

@@ -93,7 +93,7 @@ export default function LoginForm() {
 
           <button
             type="submit"
-            className="p-3 cursor-pointer bg-[#5A827E] rounded-2xl text-slate-50 mt-2.5 hover:bg-[#84AE92] transition-colors duration-200"
+            className={`${isLoggingIn ? 'bg-[#83b6b0]' : 'bg-[#5A827E]'} p-3 cursor-pointer rounded-2xl text-slate-50 mt-2.5 hover:bg-[#84AE92] transition-colors duration-200`}
             disabled={isLoggingIn}
           >
             {isLoggingIn ? "memasuk..." : "masuk"}

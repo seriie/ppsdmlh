@@ -97,7 +97,7 @@ export default function RegisterForm() {
           </div>
           <button
             type="submit"
-            className="p-3 cursor-pointer bg-[#5A827E] rounded-2xl text-slate-50 mt-2.5 hover:bg-[#84AE92] transition-colors duration-200"
+            className={`${isRegistering ? 'bg-[#83b6b0]' : 'bg-[#5A827E]'} p-3 cursor-pointer rounded-2xl text-slate-50 mt-2.5 hover:bg-[#84AE92] transition-colors duration-200`}
             disabled={isRegistering}
           >
             {isRegistering ? "Mendaftar..." : "Daftar"}

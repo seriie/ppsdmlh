@@ -19,7 +19,7 @@ export default function LoginPage() {
         </div>
 
         <div className="hidden h-screen w-full md:flex items-center relative justify-end p-8 bg-[#B9D4AA]">
-          <Image src={Logo} alt="gambar" className="md:w-xl xl:w-3xl relative top-10" />
+          {Logo && <Image src={Logo} alt="gambar" className="md:w-xl xl:w-3xl relative top-10" />}
         </div>
       </div>
     </>

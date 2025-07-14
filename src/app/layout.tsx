@@ -1,15 +1,6 @@
-// app/layout.tsx
 import type { Metadata } from "next";
-import { Nunito } from "next/font/google";
 import "./globals.css";
 import SessionWrapper from "@/components/SessionWrapper";
-
-// load font with variable
-const nunito = Nunito({
-  subsets: ["latin"],
-  variable: "--font-nunito",
-  weight: ["300", "400", "500", "600", "700", "800", "900"],
-});
 
 export const metadata: Metadata = {
   title: {
@@ -26,7 +17,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className={`${nunito.variable} font-sans`}>
+      <body className={`font-sans`}>
         <SessionWrapper>
           {children}
         </SessionWrapper>

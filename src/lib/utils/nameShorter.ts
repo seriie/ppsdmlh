@@ -1,4 +1,4 @@
-export async function nameShorter(name: string, words: number = 2) {
+export function nameShorter(name: string, words: number = 2) {
     const initName = name.split(" ");
 
   if (initName.length <= words) return name;

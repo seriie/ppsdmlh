@@ -17,9 +17,21 @@ import {
 } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 
+import { nameShorter } from "@/lib/utils/nameShorter";
+
 export default function Dashboard() {
   const { data: session } = useSession();
   const router = useRouter();
+
+  const fullname = session?.user?.fullname || "User";
+  if (!fullname) {
+    return (
+      <div className="min-h-screen flex items-center justify-center">
+        <p className="text-gray-500">Loading...</p>
+      </div>
+    );
+  }
+  const nameShortened = nameShorter(fullname, 2);
 
   const handleLogout = () => {
     signOut({ callbackUrl: "/" });
@@ -32,7 +44,7 @@ export default function Dashboard() {
         <div className="flex justify-between items-center mb-8">
           <div>
             <h1 className="text-3xl font-bold text-gray-800">Dashboard</h1>
-            <p> Selamat datang kembali, {session?.user?.fullname || "User"}!
+            <p> Selamat datang kembali, {nameShortened}!
             </p>
           </div>
           <Button variant="outline" onClick={handleLogout}>

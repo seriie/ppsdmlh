@@ -22,11 +22,40 @@ export default function RegisterForm() {
     setIsRegistering(true);
     setError("");
 
+    const fullnameTrimmed = fullname.trim();
+    const emailTrimmed = email.trim();
+    const passwordTrimmed = password.trim();
+    
+    if (fullnameTrimmed.length < 5) {
+      setIsRegistering(false);
+      setError("Panjang fullname minimal 5 karakter");
+      setTimeout(() => {
+        setError("");
+      }, 4000);
+      return 
+    } else if (fullnameTrimmed.length > 50) {
+      setIsRegistering(false);
+      setError("Panjang fullname maksimal 50 karakter");
+      setTimeout(() => {
+        setError("");
+      }, 4000);
+      return 
+    }
+    
+    if (passwordTrimmed.length < 8) {
+      setIsRegistering(false);
+      setError("Panjang password minimal 8 karakter");
+      setTimeout(() => {
+        setError("");
+      }, 4000);
+      return;
+    }
+
     try {
       const res = await axios.post("/api/register", {
-        fullname,
-        email,
-        password,
+          fullname: fullnameTrimmed,
+          email: emailTrimmed,
+          password: passwordTrimmed
       });
 
       if (res.status === 201) {

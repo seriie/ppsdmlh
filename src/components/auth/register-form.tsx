@@ -25,23 +25,23 @@ export default function RegisterForm() {
     const fullnameTrimmed = fullname.trim();
     const emailTrimmed = email.trim();
     const passwordTrimmed = password.trim();
-    
+
     if (fullnameTrimmed.length < 5) {
       setIsRegistering(false);
       setError("Panjang fullname minimal 5 karakter");
       setTimeout(() => {
         setError("");
       }, 4000);
-      return 
+      return;
     } else if (fullnameTrimmed.length > 50) {
       setIsRegistering(false);
       setError("Panjang fullname maksimal 50 karakter");
       setTimeout(() => {
         setError("");
       }, 4000);
-      return 
+      return;
     }
-    
+
     if (passwordTrimmed.length < 8) {
       setIsRegistering(false);
       setError("Panjang password minimal 8 karakter");
@@ -52,11 +52,14 @@ export default function RegisterForm() {
     }
 
     try {
-      console.log("Registering user:", { fullname: fullnameTrimmed, email: emailTrimmed });
+      console.log("Registering user:", {
+        fullname: fullnameTrimmed,
+        email: emailTrimmed,
+      });
       const res = await axios.post("/api/register", {
-          fullname: fullnameTrimmed,
-          email: emailTrimmed,
-          password: passwordTrimmed
+        fullname: fullnameTrimmed,
+        email: emailTrimmed,
+        password: passwordTrimmed,
       });
 
       console.log("Response from registration:", res.data);
@@ -65,13 +68,12 @@ export default function RegisterForm() {
         setIsRegistering(false);
         router.push("/auth/login");
       } else {
-        setError("Registrasi gagal. Coba lagi ya!");
+        setError(res.data.message || "Gagal mendaftar");
         setIsRegistering(false);
       }
-    } catch (e: string | any) {
-      alert("yahhaha gagal")
+    } catch (e: unknown) {
       setIsRegistering(false);
-      setError(getAxiosErrorMessage(e.message));
+      setError(getAxiosErrorMessage(e));
     } finally {
       setFullname("");
       setEmail("");
@@ -135,7 +137,9 @@ export default function RegisterForm() {
           </div>
           <button
             type="submit"
-            className={`${isRegistering ? 'bg-[#83b6b0]' : 'bg-[#5A827E]'} p-3 cursor-pointer rounded-2xl text-slate-50 mt-2.5 hover:bg-[#84AE92] transition-colors duration-200`}
+            className={`${
+              isRegistering ? "bg-[#83b6b0]" : "bg-[#5A827E]"
+            } p-3 cursor-pointer rounded-2xl text-slate-50 mt-2.5 hover:bg-[#84AE92] transition-colors duration-200`}
             disabled={isRegistering}
           >
             {isRegistering ? "Mendaftar..." : "Daftar"}

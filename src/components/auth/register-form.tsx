@@ -58,7 +58,7 @@ export default function RegisterForm() {
           password: passwordTrimmed
       });
 
-      if (res.status === 201) {
+      if (res.status === 200) {
         setIsRegistering(false);
         router.push("/auth/login");
       } else {

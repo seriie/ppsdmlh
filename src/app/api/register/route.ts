@@ -7,6 +7,7 @@ export async function POST(req: Request) {
     try {
         const body = await req.json();
         const { fullname, email, password } = body;
+        console.log("Registering user:", { fullname, email });
 
         if (!fullname || !email || !password) {
             return NextResponse.json(

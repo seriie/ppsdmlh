@@ -52,22 +52,31 @@ export default function RegisterForm() {
     }
 
     try {
+      console.log("Registering user:", { fullname: fullnameTrimmed, email: emailTrimmed });
       const res = await axios.post("/api/register", {
           fullname: fullnameTrimmed,
           email: emailTrimmed,
           password: passwordTrimmed
       });
 
-      if (res.status === 200) {
+      console.log("Response from registration:", res.data);
+
+      if (res.status === 201) {
         setIsRegistering(false);
         router.push("/auth/login");
       } else {
         setError("Registrasi gagal. Coba lagi ya!");
         setIsRegistering(false);
       }
-    } catch (e: unknown) {
+    } catch (e: string | any) {
+      alert("yahhaha gagal")
       setIsRegistering(false);
-      setError(getAxiosErrorMessage(e));
+      setError(getAxiosErrorMessage(e.message));
+    } finally {
+      setFullname("");
+      setEmail("");
+      setPassword("");
+      setIsRegistering(false);
     }
   };
 

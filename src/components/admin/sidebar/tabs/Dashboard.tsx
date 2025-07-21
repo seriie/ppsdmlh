@@ -8,7 +8,7 @@ import { FaCircleCheck } from "react-icons/fa6";
 import { FaStar } from "react-icons/fa";
 
 export default function Dashboard() {
-    const [users, setUsers] = useState<any[]>([]);
+    const [users, setUsers] = useState<[]>([]);
 
    const getUsers = async () => {
         try {

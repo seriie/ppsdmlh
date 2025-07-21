@@ -42,8 +42,8 @@ const typeConfig = {
 
 export default function Alerts({ type, title, description, time }: AlertsProps) {
   const config = typeConfig[type];
-  const [visible, setVisible] = useState(false);
-  const [shouldRender, setShouldRender] = useState(false);
+  const [visible, setVisible] = useState<boolean>(false);
+  const [shouldRender, setShouldRender] = useState<boolean>(false);
 
   useEffect(() => {
     if (!title) return;

@@ -6,9 +6,9 @@ import Image from "next/image";
 import { useRouter } from "next/navigation";
 
 export default function SplashScreen({ logoSrc }: {logoSrc: StaticImageData}) {
-  const [showText, setShowText] = useState(false);
-  const [logoUp, setLogoUp] = useState(false);
-  const [fadeInLogo, setFadeInLogo] = useState(false);
+  const [showText, setShowText] = useState<boolean>(false);
+  const [logoUp, setLogoUp] = useState<boolean>(false);
+  const [fadeInLogo, setFadeInLogo] = useState<boolean>(false);
   const router = useRouter();
 
   useEffect(() => {

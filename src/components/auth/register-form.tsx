@@ -9,13 +9,14 @@ import { getAxiosErrorMessage } from "@/lib/utils/getAxiosErrMsg";
 import Alerts from "@/components/root/Alerts";
 
 export default function RegisterForm() {
+  const [showPw, setShowPw] = useState<boolean>(false);
+  const [fullname, setFullname] = useState<string>("");
+  const [email, setEmail] = useState<string>("");
+  const [password, setPassword] = useState<string>("");
+  const [isRegistering, setIsRegistering] = useState<boolean>(false);
+  const [error, setError] = useState<string>("");
+  
   const router = useRouter();
-  const [showPw, setShowPw] = useState(false);
-  const [fullname, setFullname] = useState("");
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [isRegistering, setIsRegistering] = useState(false);
-  const [error, setError] = useState("");
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();

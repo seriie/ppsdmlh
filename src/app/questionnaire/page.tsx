@@ -12,7 +12,7 @@ import Icon from "../../assets/icon.png";
 export default function Questionnaire() {
  const questions = {text: "seberapa peduli kamu dengan lingkungan?"};
 
-const [selectedAnswer, setSelectedAnswer] = useState(" ")
+const [selectedAnswer, setSelectedAnswer] = useState<string>(" ")
 
   const answers = [
     { text: "Sangat Perduli" },

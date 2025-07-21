@@ -1,5 +1,6 @@
 "use client";
 
+import { useState } from "react";
 import { useSession, signOut } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import {
@@ -20,6 +21,7 @@ import { Button } from "@/components/ui/button";
 import { nameShorter } from "@/lib/utils/nameShorter";
 
 export default function Dashboard() {
+  const [loggingOut, setLoggingOut] = useState<boolean>(false);
   const { data: session } = useSession();
   const router = useRouter();
 
@@ -34,6 +36,7 @@ export default function Dashboard() {
   const nameShortened = nameShorter(fullname, 2);
 
   const handleLogout = () => {
+    setLoggingOut(true);
     signOut({ callbackUrl: "/" });
   };
 
@@ -47,9 +50,9 @@ export default function Dashboard() {
             <p> Selamat datang kembali, {nameShortened}!
             </p>
           </div>
-          <Button variant="outline" onClick={handleLogout}>
+          <Button variant="outline" className={`${loggingOut ? 'bg-slate-200' : 'hover:bg-slate-200'} cursor-pointer`} onClick={handleLogout}>
             <LogOut className="w-4 h-4 mr-2" />
-            Logout
+            {loggingOut ? "Keluar..." : "Keluar"}
           </Button>
         </div>
 

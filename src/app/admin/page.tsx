@@ -1,11 +1,10 @@
-import React from 'react'
+import React from 'react';
+import Sidebar from '@/components/admin/sidebar/Sidebar';
 
 const page = () => {
   return (
     <div>
-        <h1 className="text-3xl font-bold text-center mt-10">Admin Page</h1>
-        <p className="text-center mt-4">This is the admin page. Only accessible by admins.</p>
-        {/* Add your admin content here */}
+      <Sidebar />
     </div>
   )
 }

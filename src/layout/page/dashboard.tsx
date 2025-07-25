@@ -17,16 +17,11 @@ import {
   CardDescription,
 } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import Sidebar from "@/layout/main/DesktopSidebar";
-import { LuHouse, LuMoonStar } from "react-icons/lu";
 import { nameShorter } from "@/lib/utils/nameShorter";
-import icon from "@/assets/icon.png"
-import Image from "next/image";
 import MobileSidebar from "../main/MobileSIdeBar";
 import DesktopSidebar from "@/layout/main/DesktopSidebar";
 
 export default function Dashboard() {
-  const [open, setOpen] = useState(false);
   const [loggingOut, setLoggingOut] = useState<boolean>(false);
   const { data: session } = useSession();
   const router = useRouter();

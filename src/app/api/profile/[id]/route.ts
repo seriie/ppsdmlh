@@ -2,21 +2,25 @@ import { NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
 import type { NextRequest } from "next/server";
 
-export async function GET(req: NextRequest, context: { params: { id: string } }) {
-    const { id } = context.params;
+export async function GET(request: NextRequest) {
+  const id = request.nextUrl.pathname.split("/").pop();
 
-    try {
-        const user = await prisma.users.findUnique({
-            where: { id },
-        });
+  if (!id) {
+    return NextResponse.json({ error: "ID not provided" }, { status: 400 });
+  }
 
-        if (!user) {
-            return NextResponse.json({ error: "User not found" }, { status: 404 });
-        }
+  try {
+    const user = await prisma.users.findUnique({
+      where: { id },
+    });
 
-        return NextResponse.json(user);
-    } catch (e: unknown) {
-        console.error("Error fetching user:", e);
-        return NextResponse.json({ error: "Failed to fetch user!" }, { status: 500 });
+    if (!user) {
+      return NextResponse.json({ error: "User not found" }, { status: 404 });
     }
+
+    return NextResponse.json(user);
+  } catch (e) {
+    console.error("Error fetching user:", e);
+    return NextResponse.json({ error: "Failed to fetch user!" }, { status: 500 });
+  }
 }

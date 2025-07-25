@@ -10,7 +10,8 @@ import { IoMdSettings } from "react-icons/io";
 import icons from "../../../assets/icon.png";
 
 import Header from "../Header";
-import Dashboard from "./tabs/Dashboard";
+import Dashboard from "@/layout/admin/tabs/dashboard/Dashboard";
+import UserManagement from "@/layout/admin/tabs/user_management/UserManagement";
 
 export default function Sidebar() {
     const [tabs, setTabs] = useState<number>(1);
@@ -52,6 +53,7 @@ export default function Sidebar() {
                 <div className="ml-72">
                     <Header icon={icons} name={tabName}/>
                     {tabs === 1 && <Dashboard />}
+                    {tabs === 2 && <UserManagement />}
                 </div>
             </div>
         </>

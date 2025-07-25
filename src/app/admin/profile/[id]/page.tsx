@@ -1,5 +1,5 @@
 import { notFound } from 'next/navigation';
-import type { PageProps } from 'next';
+import PageProps from 'next';
 
 type User = {
   id: string;
@@ -10,7 +10,7 @@ type User = {
   updated_at: string;
 };
 
-export default async function ProfilePage(props: PageProps) {
+export default async function ProfilePage(props: typeof PageProps) {
   const { id } = (await props.params) as { id: string };
 
   const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/profile/${id}`, {

@@ -28,9 +28,9 @@ export default function MobileSidebar() {
         <RiMenu2Fill className="w-6 h-6" />
       </SheetTrigger>
       <SheetContent side="left" className="w-[250px] flex flex-col h-full p-4 items-start bg-teal-100">
-        <h1 className="text-2xl font-semibold text-slate-800 tracking-tight">Menu</h1>
+        <h1 className="text-2xl font-semibold text-slate-800 tracking-tight">Dashboard</h1>
 
-        <button onClick={() => handleNavigation("/dashboard")} className="flex items-center gap-2 text-black  hover:bg-teal-300 focus:bg-teal-300 w-full p-2 rounded-lg transition-all duration-300 ease-in-out transform hover:scale-[1.03] active:scale-[0.98]">
+        <button onClick={() => handleNavigation("/dashboard")} className="flex items-center gap-2 text-black hover:bg-teal-200 focus:bg-teal-300 w-full p-2 rounded-lg transition-all duration-300 ease-in-out transform hover:scale-[1.03] active:scale-[0.98]">
           <LuHouse size={25} />
           <span className="ml-2 text-md items-center text-black">Beranda</span>
         </button>
@@ -43,7 +43,7 @@ export default function MobileSidebar() {
 
 
             <button
-              className="flex mt-3 items-center gap-2 text-black hover:bg-teal-300 focus:bg-teal-300 w-full p-2 rounded-lg transition-all duration-300 ease-in-out transform hover:scale-[1.03] active:scale-[0.98]"
+              className="flex mt-3 items-center gap-2 text-black hover:bg-teal-200 focus:bg-teal-300 w-full p-2 rounded-lg transition-all duration-300 ease-in-out transform hover:scale-[1.03] active:scale-[0.98]"
             >
               <LuMoonStar size={25} />
               <span>Dark Mode</span>

@@ -14,8 +14,17 @@ model users {
   fullname   String    @db.VarChar
   email      String    @unique @db.VarChar
   password   String    @db.VarChar
-  updated_at DateTime? @db.Timestamp(6)
+  updated_at DateTime? @default(now()) @db.Timestamptz(6)
   role       role?     @default(user)
+}
+
+/// This model contains row level security and requires additional setup for migrations. Visit https://pris.ly/d/row-level-security for more info.
+model questions {
+  id             String   @id @db.VarChar
+  created_at     DateTime @default(now()) @db.Timestamptz(6)
+  qeustion       String
+  option         Json     @db.Json
+  correct_option Int      @db.SmallInt
 }
 
 enum role {

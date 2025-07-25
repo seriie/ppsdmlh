@@ -17,10 +17,16 @@ import {
   CardDescription,
 } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-
+import Sidebar from "@/layout/main/DesktopSidebar";
+import { LuHouse, LuMoonStar } from "react-icons/lu";
 import { nameShorter } from "@/lib/utils/nameShorter";
+import icon from "@/assets/icon.png"
+import Image from "next/image";
+import MobileSidebar from "../main/MobileSIdeBar";
+import DesktopSidebar from "@/layout/main/DesktopSidebar";
 
 export default function Dashboard() {
+  const [open, setOpen] = useState(false);
   const [loggingOut, setLoggingOut] = useState<boolean>(false);
   const { data: session } = useSession();
   const router = useRouter();
@@ -40,12 +46,21 @@ export default function Dashboard() {
     signOut({ callbackUrl: "/" });
   };
 
+
+
   return (
     <div className="min-h-screen bg-gray-100 py-10 px-6">
-        {/* <AppSideBar /> */}
       <div className="max-w-6xl mx-auto">
         <div className="flex justify-between items-center mb-8">
+
+
+          <div className="md:hidden">
+            <MobileSidebar />
+          </div>
           <div>
+            <div className="hidden md:flex items-start">
+              <DesktopSidebar />
+            </div>
             <h1 className="text-3xl font-bold text-gray-800">Dashboard</h1>
             <p> Selamat datang kembali, {nameShortened}!
             </p>

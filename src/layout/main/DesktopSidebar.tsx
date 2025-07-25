@@ -5,26 +5,25 @@ import { useRouter } from "next/navigation";
 import { useState, useRef } from "react";
 import ProfileDropDown from "@/components/ui/ProfileDropDown";
 import { cn } from "@/lib/utils";
-import Lottie from "lottie-react";
+import Lottie, {LottieRefCurrentProps} from "lottie-react";
 import menuAnimation from "@/assets/menuV3.json";
 
 export default function DesktopSidebar() {
   const router = useRouter();
   const [expanded, setExpanded] = useState(true);
-  const lottieRef = useRef<any>(null);
+  const lottieRef = useRef<LottieRefCurrentProps | null>(null);
 
   const handleToggle = () => {
     if (lottieRef.current) {
-      // Mainkan animasi tergantung state sebelumnya
-      if (expanded) {
-        lottieRef.current.setDirection(-1); // animasi ke kiri
-      } else {
-        lottieRef.current.setDirection(1); // animasi ke kanan
-      }
-      lottieRef.current.play();
+     if (expanded) {
+  lottieRef.current.setDirection(-1); 
+} else {
+  lottieRef.current.setDirection(1);  
+}
+lottieRef.current.play();
     }
 
-    // Toggle sidebar
+  
     setExpanded(prev => !prev);
   };
 

@@ -64,7 +64,7 @@ export default function Alerts({ type, title, description, time }: AlertsProps) 
     return () => {
       clearTimeout(hideTimeout);
     };
-  }, [title, description]);
+  }, [title, description, time]);
 
   if (!shouldRender) return null;
 

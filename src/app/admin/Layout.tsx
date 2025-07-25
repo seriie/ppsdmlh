@@ -1,5 +1,3 @@
-import Sidebar from "@/components/admin/sidebar/Sidebar";
-
 export default function Layout({ children }: { children: React.ReactNode }) {
   return (
     <div className="min-h-screen bg-[#B9D4AA]">

@@ -3,16 +3,11 @@ import { RiMenu2Fill } from "react-icons/ri";
 import { LuHouse } from "react-icons/lu";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
-import { LuMoonStar, LuUserRound } from "react-icons/lu";
-import Image from "next/image";
-import { useSession } from "next-auth/react";
-import DefaultPP from "@/assets/defaultUserPp.png"
+import { LuMoonStar } from "react-icons/lu";
 import ProfileDropDown from "@/components/ui/ProfileDropDown";
 
 
 export default function MobileSidebar() {
-  const { data: session } = useSession();
-  const User = session?.user || "Guest";
   const [open, setOpen] = useState(false);
   const router = useRouter();
 
@@ -20,8 +15,6 @@ export default function MobileSidebar() {
     router.push(path);
     setOpen(false);
   };
-
-  const fullname = session?.user?.fullname || "User";
   return (
     <Sheet open={open} onOpenChange={setOpen}>
       <SheetTrigger>

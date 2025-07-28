@@ -1,6 +1,6 @@
 "use client"
 import { useState } from "react";
-import { useSession } from "next-auth/react";
+import { signOut, useSession } from "next-auth/react";
 import DefaultPp from "@/assets/defaultUserPp.png";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
@@ -17,18 +17,24 @@ export default function ProfileDropDown({ className, hidden }: ProfileDropDownPr
     const fullname = session?.user?.fullname || "User";
     const [isOpen, setIsOpen] = useState(false);
     const route = useRouter();
-    return (
+    const [loggingOut, setLoggingOut] = useState<boolean>(false);
+
+    const handleLogout = () => {
+        setLoggingOut(true);
+        signOut({callbackUrl: "/"})
+    }
+     return (
         <>
-            <div className="flex flex-col items-center justify-center">
+            <div className="flex relative flex-col items-center justify-center">
                 {isOpen && (
-                    <div className="relative w-48 bg-white rounded-lg shadow-lg m-3">
+                    <div className="absolute w-48 mb-45 bg-white rounded-lg shadow-lg m-3">
                         <ul className="py-2">
-                            <li className="px-4 py-2 hover:bg-gray-100 cursor-pointer flex justify-start items-center gap-5" onClick={() => { route.push("/profile") }}><LuUser size={20} className="text-black" />Profile</li>
-                            <li className="px-4 py-2 text-red-600 hover:bg-gray-100 cursor-pointer flex justify-start items-center gap-5" onClick={() => { route.push("/logout") }}><LuLogOut size={20} className="text-red-600" />Logout</li>
+                            <li className="px-4 py-2 hover:bg-gray-100 cursor-pointer flex mx-2 rounded-lg justify-start items-center gap-5" onClick={() => { route.push("/profile") }}><LuUser size={20} className="text-black" />Profile</li>
+                            <li className="px-4 py-2 text-red-600 hover:bg-gray-100 mx-2 rounded-lg cursor-pointer flex justify-start items-center gap-5" onClick={handleLogout}><LuLogOut size={20} className="text-red-600" /> {loggingOut ? "Keluar.." : "Keluar"}</li>
                         </ul>
                     </div>
                 )}
-                <button className={`flex items-center gap-2 text-black ${className} bg-gray-100 hover:bg-gray-100 transition-all duration-400 ease-in-out focus:bg-gray-100 active:scale-[0.98] w-full p-2 rounded-2xl transition-colors`} onClick={() => setIsOpen(!isOpen)}>
+                <button className={`flex items-center gap-2 text-black ${className} bg-gray-100 hover:bg-gray-100 transition-all duration-400 ease-in-out focus:bg-gray-100 active:scale-[0.98] w-full p-2 rounded-2xl`} onClick={() => setIsOpen(!isOpen)}>
                     <Image
                         src={User.image || DefaultPp}
                         alt="User Avatar"

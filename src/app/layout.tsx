@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import "./globals.css";
 import SessionWrapper from "@/components/root/SessionWrapper";
+import { ThemeProvider as NextThemeProvider } from "@/components/ThemeProvider";
 
 export const metadata: Metadata = {
   title: {
@@ -16,11 +17,19 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en">
-      <body className={`font-sans`}>
-        <SessionWrapper>
+    <html lang="en" suppressHydrationWarning>
+      <body className={`font-sans transition-colors ease-in-out transform duration-500`}>
+         
+        <NextThemeProvider
+          attribute="class"
+          defaultTheme="system"
+          enableSystem
+          disableTransitionOnChange
+          >
+            <SessionWrapper>
           {children}
-        </SessionWrapper>
+          </SessionWrapper>
+        </NextThemeProvider>
       </body>
     </html>
   );

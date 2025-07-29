@@ -22,7 +22,7 @@ export default function MobileSidebar() {
   return (
     <Sheet open={open} onOpenChange={setOpen}>
       <SheetTrigger>
-        <RiMenu2Fill className="w-6 h-6 text-teal-400" />
+        <RiMenu2Fill className="w-6 h-6 text-teal-900" />
       </SheetTrigger>
       <SheetContent side="left" className="w-[250px] flex flex-col h-full p-4 items-start bg-teal-100 dark:bg-teal-800">
         <h1 className="text-2xl font-semibold text-slate-800 tracking-tight">Dashboard</h1>

@@ -1,13 +1,12 @@
 "use client";
 
 import { useState } from "react";
-import { useSession, signOut } from "next-auth/react";
+import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import {
   ClipboardList,
   BarChart2,
   CheckCircle,
-  LogOut,
 } from "lucide-react";
 import {
   Card,
@@ -21,10 +20,11 @@ import { nameShorter } from "@/lib/utils/nameShorter";
 import MobileSidebar from "../main/MobileSIdeBar";
 import DesktopSidebar from "@/layout/main/DesktopSidebar";
 import { cn } from "@/lib/utils";
+import Questionnaire from "@/assets/Questionnaire.png";
+import Image from "next/image";
 
 
 export default function Dashboard() {
-  const [loggingOut, setLoggingOut] = useState<boolean>(false);
   const { data: session } = useSession();
   const router = useRouter();
   const [isOpen, setIsOpen] = useState(false);
@@ -40,10 +40,6 @@ export default function Dashboard() {
   }
   const nameShortened = nameShorter(fullname, 2);
 
-  const handleLogout = () => {
-    setLoggingOut(true);
-    signOut({ callbackUrl: "/" });
-  };
 
 
 
@@ -54,9 +50,6 @@ export default function Dashboard() {
         <DesktopSidebar isOpen={isOpen} setIsOpen={setIsOpen} />
       </div>
 
-      <div className="md:hidden">
-        <MobileSidebar />
-      </div>
 
       <div
         className={cn(
@@ -66,18 +59,29 @@ export default function Dashboard() {
         )}
       >
 
-        <div className="mainContent flex flex-col mx-w-7xl mx-auto p-4">
+        <div className="mainContent flex flex-col mx-w-7xl p-4">
+          <div className="relative flex md:flex-row flex-col p-3 md:p-0 bg-gradient-to-b from-cyan-400 via-teal-200 to-teal-50 h-[180px] shadow-md rounded-3xl w-full items-center mb-8">
+            <div className="flex justify-start items-start w-full md:w-auto">
 
-          <div className="justify-between items-center mb-8 mt-4">
+              <div className="md:hidden">
+                <MobileSidebar />
+              </div>
+              <Image
+                src={Questionnaire}
+                alt="Questionnaire"
+                className="object-cover md:ml-5 rounded-3xl relative w-40 md:w-[250px]"
+                width={350}
+                height={200}
+                priority
+              />
+            </div>
 
-            <h1 className="text-3xl font-bold text-gray-800">Dashboard</h1>
-            <p> Selamat datang kembali, {nameShortened}!
-            </p>
-
-            <Button variant="outline" className={`${loggingOut ? 'bg-slate-200' : 'hover:bg-slate-200'} cursor-pointer`} onClick={handleLogout}>
-              <LogOut className="w-4 h-4 mr-2" />
-              {loggingOut ? "Keluar..." : "Keluar"}
-            </Button>
+            <div className="mb-3 md:mb-0 flex flex-col">
+              <h1 className="text-2xl font-semibold text-gray-800">
+                Selamat Datang, {nameShortened}
+              </h1>
+              <p className="text-gray-600">Ayo mulai menjawab soal hari ini!</p>
+            </div>
           </div>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">

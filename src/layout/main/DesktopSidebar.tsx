@@ -41,10 +41,12 @@ console.log("theme:", theme);
   return (
     <aside
       className={cn(
-        "bg-teal-200 dark:bg-teal-700 h-screen transition-all duration-300 ease-in-out border-r shadow-sm p-4 rounded-r-3xl",
+        "bg-teal-200 dark:bg-teal-700 h-screen transition-all duration-300 ease-in-out border-r shadow-sm p-4 rounded-r-4xl",
         isOpen ? "w-64" : "w-24"
       )}
       >
+    <div className="flex flex-col justify-between h-full">
+
       <div className={cn("flex flex-col gap-6 w-full", isOpen ? "items-start" : "items-center")}>
        
         <div className={cn("flex items-center  w-full", !isOpen ? "justify-center" : "justify-between")}>
@@ -78,7 +80,7 @@ console.log("theme:", theme);
 
       </div>
   
-     <div className="relative top-[300px] flex flex-col gap-2 w-full">
+     <div className="relative flex flex-col mt-auto gap-2 w-full">
 
         <ProfileDropDown className={cn( !isOpen && "bg-transparent shadow-none")} hidden={!isOpen ? "hidden" : " "} />
         { mounted && theme === "dark" ? (
@@ -106,6 +108,7 @@ console.log("theme:", theme);
         ) : null}
 
           </div>
+    </div>
     </aside>
   );
 }

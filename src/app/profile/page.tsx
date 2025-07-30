@@ -9,13 +9,17 @@ import DesktopSidebar from "@/layout/main/DesktopSidebar";
 import { cn } from "@/lib/utils";
 import Questionnaire from "@/assets/Questionnaire.png";
 import Image from "next/image";
+import DefaultPp from "@/assets/defaultUserPp.png";
+import {toast} from "sonner";
 
 
 export default function Page() {
   const { data: session } = useSession();
   const [isOpen, setIsOpen] = useState(false);
+  const user = session?.user;
+  const [updateName, setUpdateName] = useState(user?.fullname || " ");
 
-
+  const nameShortened = nameShorter(updateName || "User", 2);
   const fullname = session?.user?.fullname || "User";
   if (!fullname) {
     return (
@@ -25,7 +29,24 @@ export default function Page() {
     );
   }
 
+  const handleSaveChanges = async () => {
+    const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/profile/${user?.id}`, {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ fullname: updateName }),
+    });
 
+    if (!response.ok) {
+      console.error("Failed to update profile");
+      return toast.error("Failed to update profile. Please try again.");
+    }
+
+    const updatedUser = await response.json();
+    console.log("Profile updated successfully:", updatedUser);
+    return toast.success("Update Successfully 🚀")
+  };
 
 
   return (
@@ -61,23 +82,94 @@ export default function Page() {
 
             <div className="mx-auto my-auto flex flex-col mt-10 ml-20 items-center justify-center">
 
-              <h1 className="text-2xl font-semibold mb-4">Welcome, {nameShorter(fullname, 2)}!</h1>
+              <h1 className="text-2xl font-semibold mb-4">Welcome, {nameShortened}!</h1>
               <p className="text-gray-600 mb-6">This is your dashboard where you can manage your profile and settings.</p>
             </div>
           </div>
 
-          <div className="">
+          <div className="flex flex-col justify-center space-y-6 bg-white shadow-md rounded-lg p-6">
 
+            <h1 className="text-2xl font-semibold text-center md:text-left">Kelola Profil</h1>
+
+
+            <div className="flex flex-col md:flex-row items-center justify-center gap-6">
+              <Image
+                src={user?.image || DefaultPp}
+                alt="Profile Image"
+                width={96}
+                height={96}
+                className="w-24 h-24 rounded-full object-cover"
+              />
+              <div className="flex flex-col w-full max-w-sm">
+                <label className="text-sm font-medium text-gray-700 mb-2">
+                  Upload Profile Picture
+                </label>
+                <input
+                  type="file"
+                  accept="image/*"
+                  className="block w-full text-sm text-gray-500
+          file:mr-4 file:py-2 file:px-4
+          file:rounded-md file:border-0
+          file:text-sm file:font-semibold
+          file:bg-teal-50 file:text-teal-700
+          hover:file:bg-teal-100"
+                />
+              </div>
+            </div>
+
+
+            <form className="space-y-4">
+              <div>
+                <label htmlFor="fullname" className="block text-sm font-medium text-gray-700">
+                  Fullname
+                </label>
+                <input
+                  type="text"
+                  id="fullname"
+                  name="fullname"
+                  value={updateName}
+                  onChange={(e) => setUpdateName(e.target.value)}
+                  className="mt-1 block w-full md:w-3/4 p-2 pl-4 border border-slate-800 rounded-md shadow-sm focus:ring focus:ring-opacity-50"
+                />
+              </div>
+
+              <div>
+                <label htmlFor="email" className="block text-sm font-medium text-gray-700">
+                  Email
+                </label>
+                <input
+                  type="email"
+                  id="email"
+                  name="email"
+                  defaultValue={user?.email}
+                  disabled
+                  className="mt-1 block w-full md:w-3/4 p-2 pl-4 border border-slate-800 rounded-md shadow-sm bg-gray-100 text-gray-500 cursor-not-allowed"
+                />
+              </div>
+
+              <div>
+                <label htmlFor="role" className="block text-sm font-medium text-gray-700">
+                  Role
+                </label>
+                <input
+                  type="text"
+                  id="role"
+                  name="role"
+                  defaultValue={user?.role}
+                  disabled
+                  className="mt-1 block w-full md:w-3/4 p-2 pl-4 border border-slate-800 rounded-md shadow-sm bg-gray-100 text-gray-500 cursor-not-allowed"
+                />
+              </div>
+            </form>
+
+
+            <div className="pt-6 flex justify-start">
+              <Button onClick={handleSaveChanges} className="bg-teal-500 text-white hover:bg-teal-600 transition-colors duration-300">
+                Simpan perubahan
+              </Button>
+            </div>
           </div>
 
-
-
-          <div className="mt-10 flex justify-center gap-4">
-            <Button className="bg-teal-500 text-white hover:bg-teal-600 transition-colors duration-300">
-              Simpan
-            </Button>
-
-          </div>
         </div>
       </div>
     </div>

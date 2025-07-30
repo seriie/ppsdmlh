@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import "./globals.css";
 import SessionWrapper from "@/components/root/SessionWrapper";
 import { ThemeProvider as NextThemeProvider } from "@/components/ThemeProvider";
+import { Toaster } from "@/components/ui/sonner"
 
 export const metadata: Metadata = {
   title: {
@@ -19,17 +20,18 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <body className={`font-sans transition-colors ease-in-out transform duration-500`}>
-         
+
         <NextThemeProvider
           attribute="class"
           defaultTheme="system"
           enableSystem
           disableTransitionOnChange
-          >
-            <SessionWrapper>
-          {children}
+        >
+          <SessionWrapper>
+            {children}
           </SessionWrapper>
         </NextThemeProvider>
+        <Toaster />
       </body>
     </html>
   );

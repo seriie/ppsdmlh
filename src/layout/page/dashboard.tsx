@@ -2,7 +2,6 @@
 
 import { useState } from "react";
 import { useSession } from "next-auth/react";
-import { useRouter } from "next/navigation";
 import {
   ClipboardList,
   BarChart2,
@@ -15,18 +14,17 @@ import {
   CardTitle,
   CardDescription,
 } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
 import { nameShorter } from "@/lib/utils/nameShorter";
 import MobileSidebar from "../main/MobileSIdeBar";
 import DesktopSidebar from "@/layout/main/DesktopSidebar";
 import { cn } from "@/lib/utils";
 import Questionnaire from "@/assets/Questionnaire.png";
 import Image from "next/image";
+import QuestionnaireCard from "../main/QuesionnaireCard";
 
 
 export default function Dashboard() {
   const { data: session } = useSession();
-  const router = useRouter();
   const [isOpen, setIsOpen] = useState(false);
 
 
@@ -129,13 +127,16 @@ export default function Dashboard() {
               </CardContent>
             </Card>
           </div>
+<div className="flex flex-col gap-5">
 
-          <div className="mt-10 flex justify-center gap-4">
-            <Button onClick={() => router.push("/questionnaire")}>
-              Isi Soal Sekarang
-            </Button>
-            <Button variant="outline">Lihat Riwayat</Button>
-          </div>
+  <div className="max-w-md mt-6 border border-gray-300 bg-cyan-50 text-cyan-700 rounded-xl p-2 shadow-sm text-xs">
+      💡 <span className="font-medium">Kuesioner ini dibuat untuk memahami kebutuhan dan pandanganmu.</span>
+    </div>
+
+    <div className="">
+      <QuestionnaireCard />
+    </div> 
+</div>
         </div>
       </div>
     </div>

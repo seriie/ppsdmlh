@@ -25,6 +25,7 @@ export default function ProfileDropDown({ className, hidden }: ProfileDropDownPr
         setLoggingOut(true);
         signOut({ callbackUrl: "/" })
     }
+
     return (
         <>
             <div className="flex relative transition-all ease-in-out duration-300 flex-col items-center justify-center">

@@ -20,10 +20,10 @@ const QuesionnaireCard = () => {
             {QuestionnaireList.map((list, idx) =>
                 <Card key={idx} className="max-w-xl flex">
                     <CardHeader className="w-1/2">
-                            <CardTitle className="flex flex-col text-nowrap">
-                                <span className=" flex text-2xl">{idx + 1}. {list.title}</span>
+                        <CardTitle className="flex flex-col text-nowrap">
+                            <span className=" flex text-2xl">{idx + 1}. {list.title}</span>
                             <span className="text-sm">status : {completed ? "sudah diisi" : "belum diisi"}</span>
-                            </CardTitle>
+                        </CardTitle>
                         <CardDescription className="mt-5">
                             <div className="flex justify-between w-full">
                                 <div className="flex items-center justify-center gap-2">
@@ -36,8 +36,8 @@ const QuesionnaireCard = () => {
                                 <div className={`z-10 w-[${progress}%] h-2.5 bg-gray-700 rounded-lg`}></div>
                             </div>
                             <div className="flex mt-3 gap-5 items-center">
-                            <LuBell></LuBell>
-                            <p>Selesaikan Sebelum {list.ExpDate}</p>
+                                <LuBell></LuBell>
+                                <p>Selesaikan Sebelum {list.ExpDate}</p>
                             </div>
 
                         </CardDescription>

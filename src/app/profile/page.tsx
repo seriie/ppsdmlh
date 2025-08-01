@@ -94,7 +94,7 @@ export default function Page() {
 
             <div className="flex flex-col md:flex-row items-center justify-center gap-6">
               <Image
-                src={user?.image || DefaultPp}
+                src={DefaultPp}
                 alt="Profile Image"
                 width={96}
                 height={96}

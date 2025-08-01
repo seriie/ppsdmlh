@@ -82,7 +82,7 @@ export default function Dashboard() {
             </div>
           </div>
 
-          
+
 
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
             <Card className="shadow-md hover:shadow-lg transition">
@@ -127,16 +127,16 @@ export default function Dashboard() {
               </CardContent>
             </Card>
           </div>
-<div className="flex flex-col gap-5">
+          <div className="flex flex-col gap-5">
 
-  <div className="max-w-md mt-6 border border-gray-300 bg-cyan-50 text-cyan-700 rounded-xl p-2 shadow-sm text-xs">
-      💡 <span className="font-medium">Kuesioner ini dibuat untuk memahami kebutuhan dan pandanganmu.</span>
-    </div>
+            <div className="max-w-md mt-6 border border-gray-300 bg-cyan-50 text-cyan-700 rounded-xl p-2 shadow-sm text-xs">
+              💡 <span className="font-medium">Kuesioner ini dibuat untuk memahami kebutuhan dan pandanganmu.</span>
+            </div>
 
-    <div className="">
-      <QuestionnaireCard />
-    </div> 
-</div>
+            <div className="relative bottom-5">
+              <QuestionnaireCard />
+            </div>
+          </div>
         </div>
       </div>
     </div>

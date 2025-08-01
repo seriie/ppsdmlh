@@ -1,119 +1,260 @@
-"use client";
-import Image from "next/image";
-import envImg from "../../assets/environtment-image.png";
+"use client"
+
 import { useState } from "react";
-import { IoIosArrowDropleftCircle } from "react-icons/io";
-import { RxCrossCircled } from "react-icons/rx";
+import { Button } from "@/components/ui/button";
+import { Card } from "@/components/ui/card";
+import { Input } from "@/components/ui/input";
+import { Textarea } from "@/components/ui/textarea";
+import { RadioGroup, RadioGroupItem } from "@/components/ui/radiogrup";
+import { Label } from "@/components/ui/label";
+import { Progress } from "@/components/ui/progress";
+import { Badge } from "@/components/ui/badge";
+import { useRouter } from "next/navigation";
+import { CheckCircle, AlertCircle } from "lucide-react";
+import { toast } from "sonner";
 
-export default function QuestionForm() {
-  const [questionIndex, setQuestionIndex] = useState<number>(0);
-  const [selectedAnswer, setSelectedAnswer] = useState<string>("");
 
-  const questions = [
-    {
-      text: "Seberapa peduli kamu dengan lingkungan?",
-      answer: "Sangat Peduli, peduli, tidak peduli, sangat tidak peduli",
-      correct_option: "Sangat Peduli",
-    },
-    {
-      text: "Apa yang kamu lakukan untuk menjaga lingkungan?",
-      answer:
-        "Membuang sampah pada tempatnya, mengurangi penggunaan plastik, menanam pohon, tidak melakukan apapun",
-      correct_option: "Membuang sampah pada tempatnya",
-    },
-    {
-      text: "Apakah kamu pernah mengikuti kegiatan lingkungan?",
-      answer: "Pernah, Tidak Pernah, mungkin pernah, gatau lah",
-      correct_option: "Pernah",
-    },
-  ];
+interface Question {
+  id: string;
+  section: string;
+  type: "multiple_choice" | "short_answer" | "long_answer";
+  question: string;
+  required: boolean;
+  options?: string[] | number[];
+}
 
-  const handleNext = () => {
-    if (questionIndex < questions.length - 1) {
-      setQuestionIndex((prev) => prev + 1);
-      setSelectedAnswer("");
-    }
+const sampleQuestions: Question[] = [
+  {
+    id: "1",
+    section: "Respondent Profile",
+    type: "multiple_choice",
+    question: "What is your age group?",
+    required: true,
+    options: ["18-25", "26-35", "36-45", "46-55", "56-65", "Over 65"]
+  },
+  {
+    id: "2", 
+    section: "Respondent Profile",
+    type: "short_answer",
+    question: "What is your occupation?",
+    required: true,
+  },
+  {
+    id: "3",
+    section: "Environment Awareness",
+    type: "multiple_choice", 
+    question: "How would you rate your knowledge of environmental issues?",
+    required: true,
+    options: ["Very Poor", "Poor", "Fair", "Good", "Excellent"]
+  },
+  {
+    id: "4",
+    section: "Environment Awareness",
+    type: "multiple_choice",
+    question: "Which of the following environmental issues concern you most?",
+    required: true,
+    options: ["Climate Change", "Air Pollution", "Water Pollution", "Deforestation", "Waste Management", "Biodiversity Loss"]
+  },
+  {
+    id: "5",
+    section: "Environment Awareness",
+    type: "long_answer",
+    question: "Describe any environmental initiatives or practices you personally follow to reduce your environmental impact.",
+    required: false
+  },
+  {
+    id: "6",
+    section: "Policy Feedback",
+    type: "multiple_choice",
+    question: "How effective do you think current government environmental policies are?",
+    required: true,
+    options: ["Very Ineffective", "Ineffective", "Neutral", "Effective", "Very Effective"]
+  },
+  {
+    id: "7",
+    section: "Policy Feedback",
+    type: "long_answer",
+    question: "What specific environmental policies or initiatives would you like to see implemented in your community?",
+    required: false
+  }
+];
+
+export default function QuestionnairePage() {
+  const navigate = useRouter();
+  const [responses, setResponses] = useState<Record<string, string>>({});
+  const [isSubmitting, setIsSubmitting] = useState(false);
+
+  const sections = Array.from(new Set(sampleQuestions.map(q => q.section)));
+  const totalQuestions = sampleQuestions.length;
+  const answeredQuestions = Object.keys(responses).length;
+  const progress = (answeredQuestions / totalQuestions) * 100;
+
+  const handleResponseChange = (questionId: string, value: string) => {
+    setResponses(prev => ({
+      ...prev,
+      [questionId]: value
+    }));
   };
 
-  const handlePrevious = () => {
-    if (questionIndex > 0) {
-      setQuestionIndex((prev) => prev - 1);
-      setSelectedAnswer("");
+  const validateForm = () => {
+    const requiredQuestions = sampleQuestions.filter(q => q.required);
+    const missingRequired = requiredQuestions.filter(q => !responses[q.id]);
+    return missingRequired;
+  };
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    
+    const missingRequired = validateForm();
+    if (missingRequired.length > 0) {
+      toast.error("survey belum lengkap!",{
+        description: `terdapat ${missingRequired.length} pertanyaan wajib yang belum diisi. Silahkan cek kembali`
+      }); 
+      return;
+    }
+
+    setIsSubmitting(true);
+    
+ 
+    setTimeout(() => {
+      toast("Survey Submitted Successfully! Thank you for your participation. Your responses have been recorded.");
+      setIsSubmitting(false);
+      navigate.push("/questionnaire");
+    }, 2000);
+  };
+
+  const renderQuestion = (question: Question) => {
+    const value = responses[question.id] || "";
+    
+    switch (question.type) {
+      case "multiple_choice":
+        return (
+          <RadioGroup
+            value={value}
+            onValueChange={(value) => handleResponseChange(question.id, value)}
+          >
+            {question.options?.map((option) => (
+              <div key={option} className="flex items-center space-x-2">
+                <RadioGroupItem value={option} id={`${question.id}-${option}`} />
+                <Label htmlFor={`${question.id}-${option}`} className="text-sm">
+                  {option}
+                </Label>
+              </div>
+            ))}
+          </RadioGroup>
+        );
+      
+      case "short_answer":
+        return (
+          <Input
+            value={value}
+            onChange={(e) => handleResponseChange(question.id, e.target.value)}
+            placeholder="Enter your answer..."
+            className="w-full"
+          />
+        );
+      
+      case "long_answer":
+        return (
+          <Textarea
+            value={value}
+            onChange={(e) => handleResponseChange(question.id, e.target.value)}
+            placeholder="Please provide a detailed answer..."
+            className="w-full min-h-[120px]"
+          />
+        );
+      
+      default:
+        return null;
     }
   };
 
   return (
-    <div className="w-[900px] h-auto mx-5 md:w-[1000px] md:h-[500px] grid grid-cols-1 md:grid-cols-2 bg-slate-50 rounded-[50px] md:rounded-[100px] overflow-auto relative border-6 border-slate-50 shadow-xl my-10">
-      <div className="bg-[#B9D4AA] flex items-center justify-center pb-6 md:p-10 rounded-b-[50px] md:rounded-b-none md:rounded-l-[100px] overflow-auto">
-        <div className="flex flex-col gap-3 md:gap-5 w-80 px-5">
-          <div className="flex absolute pt-5 items-center gap-2 md:relative md:bottom-30 md:right-15">
-            <IoIosArrowDropleftCircle className="text-[#53624a] hidden md:block" />
-            <span className="text-[#53624a] font-md hidden md:block">
-              Beranda
-            </span>
-            <RxCrossCircled className="text-[#53624a] text-3xl md:hidden relative right-3" />
+    <div className="max-w-4xl mx-auto space-y-8">
+
+      <div className="text-center space-y-4">
+        <h1 className="text-3xl font-bold text-foreground">
+          Environmental Awareness Survey 2024
+        </h1>
+        <p className="text-muted-foreground max-w-2xl mx-auto">
+          Help us understand environmental awareness and practices in your community. 
+          Your responses will contribute to important environmental policy decisions.
+        </p>
+        
+        <div className="max-w-md mx-auto space-y-2">
+          <div className="flex justify-between text-sm text-muted-foreground">
+            <span>Progress</span>
+            <span>{answeredQuestions} of {totalQuestions} questions</span>
           </div>
-          <Image
-            className="relative left-6 w-75 top-4 h-50 mb-1 md:hidden"
-            src={envImg}
-            alt="gambar lingkungan"
-          />
-          <h1 className="text-xl font-bold text-slate-50">
-            Step {questionIndex + 1}/{questions.length}
-          </h1>
-          <h1 className="text-2xl font-bold text-[#53624a] break-words overflow-wrap">
-            {questions[questionIndex].text}
-          </h1>
-          <p className="text-slate-50">Pilih satu jawaban</p>
+          <Progress value={progress} className="h-2 bg-cyan-200" />
         </div>
       </div>
 
-      <div className="bg-slate-50 flex flex-col items-center justify-center p-6 md:rounded-r-[80px] h-full overflow-auto">
-        <Image
-          className="w-80 h-50 mb-2 hidden md:block relative bottom-6"
-          src={envImg}
-          alt="gambar lingkungan"
-        />
-        <div className="flex flex-col md:max-h-[180px] w-full justify-center items-center ">
-          {questions[questionIndex].answer.split(", ").map((answer, id) => (
-            <label
-              key={id}
-              className={`text-md w-80 font-bold text-[#5A827E] hover:transition-all duration-300 ease-in-out rounded-lg border-2 p-1.5 gap-1.5 mb-2 flex items-center cursor-pointer ${
-                selectedAnswer === answer
-                  ? "bg-[#B9D4AA]"
-                  : "hover:bg-[#B9D4AA]"
-              }`}
-            >
-              <input
-                type="radio"
-                name="question"
-                value={answer}
-                checked={selectedAnswer === answer}
-                onChange={() => setSelectedAnswer(answer)}
-                className="accent-[#5A827E]"
-              />
-              <span className="break-words">{answer}</span>
-            </label>
-          ))}
+      <form onSubmit={handleSubmit} className="space-y-8">
+        {sections.map((section) => (
+          <Card key={section} className="p-8">
+            <div className="mb-6">
+              <h2 className="text-xl font-semibold text-foreground mb-2">
+                {section}
+              </h2>
+              <div className="h-1 w-16 bg-gradient-primary rounded-full" />
+            </div>
 
-          <div className="relative top-3 space-x-4 md:pb-5">
-            <button
-              onClick={handlePrevious}
-              disabled={questionIndex === 0}
-              className="w-28 h-10 rounded-4xl justify-center items-center hover:bg-[#9bb58d] hover:scale-100 transition-all duration-300 ease-in-out hover:text-slate-50 border-2 border-[#5A827E] text-[#5A827E] disabled:opacity-50"
-            >
-              Sebelumnya
-            </button>
-            <button
-              onClick={handleNext}
-              disabled={!selectedAnswer}
-              className="w-28 h-10 rounded-4xl justify-center items-center hover:bg-[#9bb58d] hover:scale-100 transition-all duration-300 ease-in-out bg-[#5A827E] text-slate-50 disabled:opacity-50"
-            >
-              Selanjutnya
-            </button>
-          </div>
+            <div className="space-y-6">
+              {sampleQuestions
+                .filter(q => q.section === section)
+                .map((question) => (
+                  <div key={question.id} className="space-y-3">
+                    <div className="flex items-start justify-between">
+                      <Label className="text-base font-medium text-foreground leading-relaxed">
+                        {question.question}
+                      </Label>
+                      <div className="flex items-center space-x-2 ml-4">
+                        {question.required && (
+                          <Badge variant="destructive" className="text-xs">
+                            Required
+                          </Badge>
+                        )}
+                        {responses[question.id] && (
+                          <CheckCircle className="w-4 h-4 text-secondary" />
+                        )}
+                        {question.required && !responses[question.id] && (
+                          <AlertCircle className="w-4 h-4 text-destructive" />
+                        )}
+                      </div>
+                    </div>
+                    {renderQuestion(question)}
+                  </div>
+                ))}
+            </div>
+          </Card>
+        ))}
+
+
+        <div className="text-center">
+          <Button 
+            type="submit" 
+            size="lg"
+            disabled={isSubmitting}
+            className="min-w-[200px]"
+          >
+            {isSubmitting ? (
+              <>
+                <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin mr-2" />
+                Submitting...
+              </>
+            ) : (
+              <>
+                <CheckCircle className="w-4 h-4 mr-2" />
+                Submit Survey
+              </>
+            )}
+          </Button>
+          <p className="text-sm text-muted-foreground mt-4">
+            Your responses are confidential and will be used for research purposes only.
+          </p>
         </div>
-      </div>
+      </form>
     </div>
   );
-}
+  }

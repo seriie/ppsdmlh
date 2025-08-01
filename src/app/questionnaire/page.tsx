@@ -12,7 +12,7 @@ export const metadata: Metadata = {
 
 export default function Questionnaire() {
   return (
-    <div className="bg-[#B9D4AA] flex justify-center items-center min-h-svh relative">
+    <div className="bg-gradient-to-tr from-teal-200 to-slate-50 flex justify-center items-center min-h-svh relative p-10">
       <div className="absolute top-5 left-5 md:top-10 md:left-10">
         <Image
           src={Icon}
@@ -22,7 +22,7 @@ export default function Questionnaire() {
           className="md:w-25 h-auto relative bottom-1.5 md:bottom-0"
         />
       </div>
-      <QuestionForm />
+        <QuestionForm></QuestionForm>
     </div>
   );
 }

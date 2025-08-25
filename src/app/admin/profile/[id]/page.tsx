@@ -10,8 +10,12 @@ type User = {
   updated_at: string;
 };
 
-export default async function ProfilePage(props: typeof PageProps) {
-  const { id } = (await props.params) as { id: string };
+interface ProfilePageProps {
+  params: { id: string };
+}
+
+export default async function ProfilePage({ params }: ProfilePageProps) {
+  const { id } = params;
 
   const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/profile/${id}`, {
     cache: 'no-store',

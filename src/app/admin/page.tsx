@@ -1,10 +1,13 @@
 import React from 'react';
 import Sidebar from '@/components/admin/sidebar/Sidebar';
+import Layout from './Layout';
 
 const page = () => {
   return (
     <div>
-      <Sidebar />
+      <Layout>  
+        <Sidebar />
+      </Layout>
     </div>
   )
 }

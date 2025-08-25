@@ -48,7 +48,7 @@ export default function Dashboard() {
                 {itemList.map((item, idx) => (
                     <div 
                         key={idx}
-                        className="w-64 bg-slate-50 shadow-md rounded-md p-4 flex flex-col items-center justify-center gap-2"
+                        className="w-64 bg-slate-50 text-slate-700 shadow-md rounded-md p-4 flex flex-col items-center justify-center gap-2"
                     >
                         {item.icon}
                         <p className="text-4xl font-bold">{item.number}</p>

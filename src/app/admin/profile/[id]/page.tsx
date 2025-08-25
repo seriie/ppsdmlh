@@ -1,4 +1,4 @@
-import { notFound } from 'next/navigation';
+import { notFound } from "next/navigation";
 
 type User = {
   id: string;
@@ -9,16 +9,19 @@ type User = {
   updated_at: string;
 };
 
-interface ProfilePageProps {
+export default async function ProfilePage({
+  params,
+}: {
   params: { id: string };
-}
+}) {
+  const { id } = params; // langsung object, bukan Promise
 
-export default async function ProfilePage({ params }: ProfilePageProps) {
-  const { id } = params;
-
-  const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/profile/${id}`, {
-    cache: 'no-store',
-  });
+  const res = await fetch(
+    `${process.env.NEXT_PUBLIC_BASE_URL}/api/profile/${id}`,
+    {
+      cache: "no-store",
+    }
+  );
 
   if (!res.ok) {
     notFound();
@@ -30,12 +33,26 @@ export default async function ProfilePage({ params }: ProfilePageProps) {
     <div className="p-6">
       <h1 className="text-2xl font-bold mb-4">User Profile</h1>
       <div className="bg-white shadow-md rounded-lg p-6">
-        <p><strong>ID:</strong> {user.id}</p>
-        <p><strong>Full Name:</strong> {user.fullname}</p>
-        <p><strong>Email:</strong> {user.email}</p>
-        <p><strong>Role:</strong> {user.role}</p>
-        <p><strong>Created At:</strong> {new Date(user.created_at).toLocaleDateString()}</p>
-        <p><strong>Updated At:</strong> {new Date(user.updated_at).toLocaleDateString()}</p>
+        <p>
+          <strong>ID:</strong> {user.id}
+        </p>
+        <p>
+          <strong>Full Name:</strong> {user.fullname}
+        </p>
+        <p>
+          <strong>Email:</strong> {user.email}
+        </p>
+        <p>
+          <strong>Role:</strong> {user.role}
+        </p>
+        <p>
+          <strong>Created At:</strong>{" "}
+          {new Date(user.created_at).toLocaleDateString()}
+        </p>
+        <p>
+          <strong>Updated At:</strong>{" "}
+          {new Date(user.updated_at).toLocaleDateString()}
+        </p>
       </div>
     </div>
   );

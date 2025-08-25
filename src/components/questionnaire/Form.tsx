@@ -135,7 +135,7 @@ export default function QuestionnairePage() {
           >
             {question.options?.map((option) => (
               <div key={option} className="flex items-center space-x-2">
-                <RadioGroupItem value={option} id={`${question.id}-${option}`} />
+                <RadioGroupItem value={String(option)} id={`${question.id}-${option}`} />
                 <Label htmlFor={`${question.id}-${option}`} className="text-sm">
                   {option}
                 </Label>

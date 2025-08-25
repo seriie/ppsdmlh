@@ -1,5 +1,4 @@
 import { notFound } from 'next/navigation';
-import PageProps from 'next';
 
 type User = {
   id: string;

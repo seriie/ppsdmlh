@@ -15,7 +15,6 @@ type ProfileDropDownProps = {
 
 export default function ProfileDropDown({ className, hidden }: ProfileDropDownProps) {
     const { data: session } = useSession();
-    const User = session?.user || { name: "Guest", image: DefaultPp };
     const fullname = session?.user?.fullname || "User";
     const [isOpen, setIsOpen] = useState(false);
     const route = useRouter();
@@ -60,7 +59,7 @@ export default function ProfileDropDown({ className, hidden }: ProfileDropDownPr
 
                 <button className={`flex items-center gap-2 text-black ${className} bg-gray-100 hover:bg-gray-100 transition-all duration-400 ease-in-out focus:bg-gray-100 active:scale-[0.98] w-full p-2 rounded-2xl`} onClick={() => setIsOpen(!isOpen)}>
                     <Image
-                        src={User.image || DefaultPp}
+                        src={DefaultPp}
                         alt="User Avatar"
                         width={40}
                         height={40}
